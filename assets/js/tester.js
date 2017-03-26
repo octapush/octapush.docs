@@ -12,6 +12,10 @@
             url: 'file.js'
         },
         {
+            name: 'test/subDir/file2',
+            url: 'file2.js'
+        },
+        {
             name: 'test1',
             url: 'testUrl'
         },
@@ -32,7 +36,12 @@
 
         } else {
             data.name = name.splice(1).join('/');
-            parent[name[0]] = {};
+
+            if (!parent.hasOwnProperty(name[0]))
+                parent[name[0]] = {};
+            else
+                parent[name[0]] = parent;
+
             parent[name[0]] = buildStructByData(data, parent[name[0]]);
         }
 

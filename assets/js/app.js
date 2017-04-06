@@ -1,7 +1,55 @@
-// make sure we use octapushJS from 'MASTER' branch
-
-(function(win, doc) {
+(function(w, d) {
     'use strict';
+
+    var settings = {
+        execScript: true,
+        application: {
+            title: 'octapush.docs',
+            homepage: 'https://github.com/octapush/octapush.docs',
+            githubUrl: 'https://api.github.com/repos/octapush/octapushJS/git/trees/c1f15f9996fcf7c3d6729f336469439db00597fa',
+            appearance: {
+                sideMenus: {
+                    background: 'white', // white | brown,
+                    color: 'danger' // primary | info | success | warning | danger 
+                }
+            }
+        },
+        data: {
+            sideMenus: {
+                before: [{
+                        title: 'Introduction',
+                        docUrl: 'introduction.md'
+                    },
+                    {
+                        title: 'Installation',
+                        docUrl: 'Installation.md'
+                    }
+                ],
+                after: [{
+                    title: 'Sample',
+                    docUrl: 'sample.md'
+                }],
+                copyright: {
+                    title: 'octapushsss',
+                    url: 'https://github.com/octapush/octapush.docs'
+                }
+            },
+            footer: [{
+                title: 'Links 1',
+                url: 'links1.md'
+            }, {
+                title: 'Links 2',
+                url: 'links2.md'
+            }, {
+                title: 'Links 3',
+                url: 'links3.md'
+            }],
+            octapushJS: {
+                pluginsUrl: 'http://localhost/octapushJS/plugins/',
+                pluginToLoad: ['string']
+            }
+        }
+    };
 
     var sampleData = {
         "sha": "c1f15f9996fcf7c3d6729f336469439db00597fa",
@@ -607,166 +655,152 @@
         "truncated": false
     };
 
-    var settings = {
-        application: {
-            title: 'octapush.docs',
-            url: 'https://github.com/octapush/octapush.docs',
-            githubFetchUrl: 'https://api.github.com/repos/octapush/octapushJS/git/trees/c1f15f9996fcf7c3d6729f336469439db00597fa',
-            githubDirStructure: null
-        },
-        sidebar: {
-            backgroundColor: 'white', // white | brown,
-            fontColor: 'danger' // primary | info | success | warning | danger 
-        },
-        execScript: true,
-        octapushJS: {
-            pluginsPath: 'https://cdn.rawgit.com/octapush/octapushJS/dev/plugins/',
-            pluginToLoad: ['string']
-        }
-    };
-
-    var octapushDocs = {
+    var octapushDoc = {
         register: function() {
             if (settings.execScript)
-                octapushDocs.helper.initOctapushJsPlugins(function() {
-                    octapushDocs.events.document.onReady.apply();
-                });
+                octapushDoc.events.register.apply();
         },
         ui: {
             register: function() {
-                octapushDocs.ui.sidebar.theme(settings.sidebar);
+                octapushDoc.ui.body.builder();
+                octapushDoc.ui.sidebar.builder(sampleData.tree);
+                octapushDoc.ui.footer.builder.apply();
+            },
+            body: {
+                builder: function() {
+                    $('head > title').text(settings.application.title);
+                    $('.sidebar .logo a')
+                        .attr('href', settings.application.homepage)
+                        .text(settings.application.title);
+                }
             },
             sidebar: {
-                builder: function(data) {},
-                theme: function(data) {
+                builder: function(data) {
+                    octapushDoc.ui.sidebar.copyright(settings.data.sideMenus.copyright);
+                    var r = octapushDoc.helper.sideMenuDataBuilder(sampleData.tree);
+                    console.log(r);
+
+                    // r = octapushDoc.helper.sortObject(r, true);
+                    // console.log(r);
+                },
+                copyright: function(data) {
+                    $('.sidebar ul.nav').append(
+                        _o_.string.template(
+                            '<li class="copyright"><a href="{{url}}"><i class="ti-github"></i><p>&copy; {{title}}</p></a></li>',
+                            data
+                        )
+                    );
+                },
+                theme: function() {
                     $('.sidebar').attr({
-                        'data-background-color': settings.sidebar.backgroundColor,
-                        'data-active-color': settings.sidebar.fontColor
+                        'data-background-color': settings.application.appearance.sideMenus.background,
+                        'data-active-color': settings.application.appearance.sideMenus.color
                     });
 
                     $('.off-canvas-sidebar').attr({
-                        'data-background-color': settings.sidebar.backgroundColor,
-                        'data-active-color': settings.sidebar.fontColor
+                        'data-background-color': settings.application.appearance.sideMenus.background,
+                        'data-active-color': settings.application.appearance.sideMenus.color
                     });
+                }
+            },
+            footer: {
+                builder: function() {
+                    var sFooter = '';
+
+                    _o_.utility.each(settings.data.footer, function(key, val) {
+                        sFooter += _o_.string.template('<li><a href="{{url}}">{{title}}</a></li>', val);
+                    });
+
+                    $('.footer > .container-fluid > nav').html(_o_.string.format('<ul>{1}</ul>', sFooter));
                 }
             }
         },
         events: {
-            document: {
-                onLoad: function() {},
+            register: function() {
+                octapushDoc.events.windoc.register.apply();
+            },
+            windoc: {
+                register: function() {
+                    octapushDoc.events.windoc.onReady.apply();
+                },
                 onReady: function() {
-                    octapushDocs.ui.register.apply();
+                    $(d).on('ready', function() {
+                        octapushDoc.ui.sidebar.theme.apply();
 
-                    octapushDocs.helper.github.fetchDirStructure({
-                        url: settings.application.githubFetchUrl,
-                        callback: function() {
-                            console.log(settings.application.githubDirStructure);
-                        }
+                        _o_.settings.pluginsPath = settings.data.octapushJS.pluginsUrl;
+                        _o_.utility.importPlugin(settings.data.octapushJS.pluginToLoad, function() {
+                            octapushDoc.ui.register.apply();
+                        });
                     });
                 }
             }
         },
         helper: {
-            initOctapushJsPlugins: function(cb) {
-                _o_.settings.pluginsPath = settings.octapushJS.pluginsPath;
-                _o_.utility.importPlugin(settings.octapushJS.pluginToLoad, cb);
-            },
-            assignProperty: function(obj, path, value) {
-                var props = path.split('/');
-                var i = 0;
-                var prop = null;
+            sideMenuDataBuilder: function(data) {
+                var result = {};
 
-                for (; i < props.length - 1; i++) {
-                    prop = props[i];
-                    obj = obj[prop];
+                function assignProperty(obj, path, value) {
+                    var props = path.split("/");
+                    var i = 0;
+                    var prop;
+
+                    for (; i < props.length - 1; i++) {
+                        prop = props[i];
+                        obj = obj[prop];
+                    }
+
+                    obj[props[i]] = value;
                 }
 
-                obj[props[i]] = value;
-            },
-            removeEmpty: function(obj) {
-                Object.keys(obj).forEach(function(key) {
-                    if (obj[key] && typeof obj[key] === 'object')
-                        octapushDocs.helper.removeEmpty(obj[key]);
-
-                    else if (obj[key] === null || obj[key] === {} || obj[key].length == 0)
-                        delete obj[key];
+                _o_.utility.each(data, function(key, val) {
+                    assignProperty(result, val.path, val.type === 'tree' ? {} : val.url);
                 });
-                return obj;
+
+                octapushDoc.helper.sortObject(result);
+
+                return result;
             },
-            github: {
-                fetchDirStructure: function(param) {
-                    var result = {};
+            sortObject: function(obj, recursive) {
+                recursive = recursive ? recursive : false;
 
-                    // filter folder & MD files only
-                    sampleData.tree = sampleData.tree.filter(function(item) {
-                        var isMd = false;
-                        var aPath = item.path.split('.');
+                var notObj = {};
+                var isObj = {};
+                _o_.utility.each(obj, function(key, val) {
+                    if (_o_.compare.isString(val))
+                        notObj[key] = val;
+                });
 
-                        if (aPath.length > 1 && _o_.string.toLower(aPath[aPath.length - 1]) === 'md')
-                            isMd = true;
+                console.log(notObj);
 
-                        if ((item.type === 'tree') || ((item.type === 'blob') && isMd))
-                            return true;
-
-                        return false;
-                    });
-
-                    _o_.utility.each(sampleData.tree, function(key, val) {
-                        octapushDocs.helper.assignProperty(result, val.path, _o_.string.isEqual(val.type, 'tree') ? {} : val.url);
-                    });
-
-                    //result = octapushDocs.helper.removeEmpty(result);
-
-                    const removeEmpty = (obj) => {
-                        Object.keys(obj).forEach(key => {
-                            if (obj[key] && typeof obj[key] === 'object') removeEmpty(obj[key]);
-                            else if (obj[key] == null) delete obj[key];
-                        });
-                        return obj;
+                var mapped = Object.keys(notObj).map(function(el, i) {
+                    return {
+                        index: i,
+                        value: el.toLowerCase()
                     };
+                });
 
-                    result = removeEmpty(result);
+                mapped.sort(function(a, b) {
+                    return +(a.value > b.value) || +(a.value === b.value) - 1;
+                })
 
-                    console.log(result);
+                var result = mapped.map(function(el) {
+                    return notObj[el.index];
+                });
 
-                    // param = {
-                    //     url: _o_.string.format('{1}?recursive=1', param.url),
-                    //     recursive: _o_.utility.ifNull(param.recursive, true),
-                    //     callback: param.callback
-                    // };
+                console.log(result);
 
-                    // _o_.ajax.request({
-                    //     url: param.url,
-                    //     success: function(xhr) {
-                    //         xhr = JSON.parse(xhr.responseText);
-                    //         var result = {};
+                // var sorted = {};
 
-                    //         _o_.utility.each(xhr.tree, function(key, val) {
-                    //             result = octapushDocs.helper.stringPathToObject(val, result);
-                    //         });
+                // Object.keys(obj).sort().forEach(function(key) {
+                //     sorted[key] = obj[key];
 
-                    //         settings.application.githubDirStructure = result;
+                //     if (recursive && _o_.compare.isObject(obj[key]))
+                //         sorted[key] = octapushDoc.helper.sortObject(obj[key], recursive);
+                // });
 
-                    //         if (param.callback)
-                    //             param.callback(settings.application.githubDirStructure);
-                    //     }
-                    // });
-                },
-                getFiles: function(param) {
-                    param = {
-                        url: param.url,
-                        recursive: _o_.utility.ifNull(param.recursive, true),
-                        callback: param.callback
-                    };
-
-                    _o_.ajax.request({
-                        url: param.url,
-                        success: param.callback
-                    });
-                }
+                // return sorted;
             }
         }
     };
-
-    octapushDocs.register.apply();
+    octapushDoc.register.apply();
 })(window, document);

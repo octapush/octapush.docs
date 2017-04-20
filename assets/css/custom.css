@@ -12,7 +12,7 @@
 .sidebar .sidebar-wrapper>.nav li>a,
 .off-canvas-sidebar .sidebar-wrapper>.nav li>a {
     margin: 10px 0px 0px;
-    padding-left: 25px;
+    /*padding-left: 25px;*/
     padding-right: 25px;
     opacity: .7;
 }
@@ -50,7 +50,7 @@
 
 .sidebar .sidebar-wrapper>.nav [data-toggle="collapse"]~div>ul>li>a,
 .off-canvas-sidebar .sidebar-wrapper>.nav [data-toggle="collapse"]~div>ul>li>a {
-    padding-left: 70px;
+    /*padding-left: 50px;*/
     margin: 0;
 }
 
@@ -249,4 +249,29 @@
 .off-canvas-sidebar[data-active-color="danger"] .nav li.active>a {
     color: #EB5E28;
     opacity: 1;
+}
+
+.sidebar .nav li a,
+.nav>li>a {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.sidebar .nav,
+.off-canvas-sidebar .nav {
+    margin-top: 0px !important;
+}
+
+ul.nav ul.nav {
+    padding-left: 25px !important;
+}
+
+
+/*highlight.js hack*/
+
+.hljs {
+    white-space: pre !important;
+    overflow-x: auto !important;
 }

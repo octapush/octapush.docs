@@ -20,12 +20,12 @@ var settings = {
         },
         additionalData: {
             sideMenu: {
-                showMdFilesOnly: false,
+                showMdFilesOnly: true,
                 hideEmptyDirectory: true,
                 hideFiles: [],
                 before: [{
                     title: 'Introduction.md', // <== please assign extension of your file so we know how to handle it
-                    url: 'introduction.md'
+                    url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/06604fffa20ca740701b027072fe22b2352d8ac8'
                 }, {
                     title: 'photo.jpg', // <== please assign extension of your file so we know how to handle it
                     url: 'https://api.github.com/repos/fadhly-permata/Resume/git/blobs/726ede6314c6433344c29dd796dc6502b558cf70'

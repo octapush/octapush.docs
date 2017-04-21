@@ -1,4 +1,4 @@
-# OCTAPUSH.DOCS
+# **`octapush.docs`**
 Quoted from [GitHub Guide](https://guides.github.com/features/wikis/):
 
 > Good documentation is key to the success of any project. Making documentation accessible enables people to learn about a project; making it easy to update ensures that documentation stays relevant.
@@ -13,14 +13,15 @@ Referring to the above quotation, **`octapush.docs`** tries to combine the capab
 
 With `octapush.docs` you simply create your documentation files, and save those files in [GitHub] (https://github.com), and finish. Your documentation app has been created automatically and ready to use.
 
-# Reasons of Use ** octapush.docs **
+# Reasons of Use **`octapush.docs`**
 1. No need coding ability.
 2. **`octapush.docs`** is designed with a simple and beautiful look.
 3. **`octapush.docs`** using a responsive design that supports a wide range of the latest browser technologies both on desktop computers and on mobile browsers thanks to the use of [Bootstrap](https://getbootstrap.com/about/#team) technology.
 4. **`octapush.docs`** makes it easy to present documentation, simply updating (create, update, remove) your files from [GitHub](https://github.com), then **`octapush .docs`** will be updated automatically.
 5. Although specially designed to handle [_MARKDOWN_] (https://en.wikipedia.org/wiki/Markdown) file, **`octapush.docs`** still supports other files like _HTM, HTML, XHTML, JPG, JPEG, PNG, JS, CSS, C, or other script files,_ and more.
-6. Easy configuration.
-7. Easy Hosting (In the future we will present free hosting with and free subdomain).
+6. Code preview with auto detect language support.
+7. Easy configuration.
+8. Easy Hosting (In the future we will present free hosting with and free subdomain).
 
 # How To Use
 To use **`octapush.docs`**, you only need to follow 3 easy steps like the following:

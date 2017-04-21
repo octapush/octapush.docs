@@ -703,7 +703,6 @@ var sampleData = {
 
                     if (s.specialMime.images.indexOf(data.extension) !== -1) {
                         var img = _o_.string.format('<img class="center-block" src="data:image/{1};base64,{2}" />', data.extension, data.content);
-
                         $('div#document-wrapper').html(img);
 
                     } else {

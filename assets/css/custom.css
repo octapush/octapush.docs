@@ -1,3 +1,15 @@
+.capitalize {
+    text-transform: capitalize !important;
+}
+
+.uppercase {
+    text-transform: uppercase !important;
+}
+
+.lowercase {
+    text-transform: lowercase !important;
+}
+
 .sidebar .nav>.copyright {
     position: absolute;
     width: 100%;
@@ -251,7 +263,8 @@
     opacity: 1;
 }
 
-.sidebar .nav li a,
+
+/*.sidebar .nav li a,
 .nav>li>a {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
@@ -262,7 +275,7 @@
 .sidebar .nav,
 .off-canvas-sidebar .nav {
     margin-top: 0px !important;
-}
+}*/
 
 ul.nav ul.nav {
     padding-left: 25px !important;

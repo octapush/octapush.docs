@@ -13,12 +13,14 @@ Referring to the above quotation, **`octapush.docs`** tries to combine the capab
 
 With `octapush.docs`, you simply change (create, update, or delete) your documentation files, and save those files in [GitHub](https://github.com). So, your documentation is ready to use.
 
+As a simple explanation, **`octapush.docs`** is a file explorer (and viewer) for your documentation files stored in [GitHub](https://github.com). And display it according to the format of each file.
+
 # Reasons to Use **`octapush.docs`**
 1. No need coding ability.
 2. **`octapush.docs`** is designed with a simple and beautiful look.
 3. **`octapush.docs`** using a responsive design that supports a wide range of the latest browser technologies both on desktop computers and on mobile browsers thanks to the use of [Bootstrap](https://getbootstrap.com/about/#team) technology.
 4. **`octapush.docs`** makes it easy to present your documentation, by updating (create, update, remove) your files from [GitHub](https://github.com), then **`octapush.docs`** will be updated automatically.
-5. Although specially designed to handle [_MARKDOWN_] (https://en.wikipedia.org/wiki/Markdown) file, **`octapush.docs`** still supports other files like _HTM, HTML, XHTML, JPG, JPEG, PNG, JS, CSS, C, or other script files,_ and more.
+5. Although specially designed to handle [_MARKDOWN_](https://en.wikipedia.org/wiki/Markdown) file, **`octapush.docs`** still supports other files like _HTM, HTML, XHTML, JPG, JPEG, PNG, JS, CSS, C, or other script files,_ and more.
 6. Code preview with auto detect language support.
 7. Easy configuration.
 8. Simple forum for each your document (next feature).
@@ -29,8 +31,8 @@ With `octapush.docs`, you simply change (create, update, or delete) your documen
 To use **`octapush.docs`**, you only need to follow 3 easy steps like the following:
 1. Download the full package of **`octapush.docs`** from GitHub: [https://github.com/octapush/octapush.docs]().
 2. Create your documentation files (it is recommended to use the file [_MARKDOWN_](https://en.wikipedia.org/wiki/Markdown) with extension MD) and place the files on [GitHub](https://github.com).
-3. Extract and configure the **index.html** and **app.js** files as per your requirements.
-4. Save the files on the web server.
+3. Extract and configure the **index.html** and **configs.js** files as per your requirements.
+4. Upload the files on the web server.
 
 And then FINISH. 
 
@@ -41,4 +43,6 @@ You can access the live demo which is also a detailed documentation of **`octapu
 
 
 # Developer Message
-In the current state **`octapush.docs`** is still in the development stage, and not ready for use. We **HIGHLY** does not recommended you to use it.
+In the current state **`octapush.docs`** is still in the development stage, and not ready for production use.
+
+**We HIGHLY does not recommend you to use it.**

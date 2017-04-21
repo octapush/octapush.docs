@@ -17,11 +17,12 @@ With `octapush.docs` you simply create your documentation files, and save those 
 1. No need coding ability.
 2. **`octapush.docs`** is designed with a simple and beautiful look.
 3. **`octapush.docs`** using a responsive design that supports a wide range of the latest browser technologies both on desktop computers and on mobile browsers thanks to the use of [Bootstrap](https://getbootstrap.com/about/#team) technology.
-4. **`octapush.docs`** makes it easy to present documentation, simply updating (create, update, remove) your files from [GitHub](https://github.com), then **`octapush .docs`** will be updated automatically.
+4. **`octapush.docs`** makes it easy to present your documentation, by updating (create, update, remove) your files from [GitHub](https://github.com), then **`octapush.docs`** will be updated automatically.
 5. Although specially designed to handle [_MARKDOWN_] (https://en.wikipedia.org/wiki/Markdown) file, **`octapush.docs`** still supports other files like _HTM, HTML, XHTML, JPG, JPEG, PNG, JS, CSS, C, or other script files,_ and more.
 6. Code preview with auto detect language support.
 7. Easy configuration.
-8. Easy Hosting (In the future we will present free hosting with and free subdomain).
+8. Simple forum for each your document.
+9. Easy Hosting (In the future we will add free hosting and free subdomain).
 
 # How To Use
 To use **`octapush.docs`**, you only need to follow 3 easy steps like the following:
@@ -36,3 +37,7 @@ After following four steps above, you can use and access your documentation.
 
 # Live Demo & Detail Documentation
 You can access the live demo which is also a detailed documentation of **`octapush.docs`** usage [from here](http://fadhly.hol.es)
+
+
+# Developer Message
+In the current state **`octapush.docs`** is still in the development stage, and not ready for use. We HIGHLY do not recommended you to use it.

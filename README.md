@@ -41,4 +41,4 @@ You can access the live demo which is also a detailed documentation of **`octapu
 
 
 # Developer Message
-In the current state **`octapush.docs`** is still in the development stage, and not ready for use. We HIGHLY do not recommended you to use it.
+In the current state **`octapush.docs`** is still in the development stage, and not ready for use. We **HIGHLY** does not recommended you to use it.

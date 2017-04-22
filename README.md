@@ -23,7 +23,7 @@ As a simple explanation, **`octapush.docs`** is a file explorer (and viewer) for
 5. Have capability to handle lot file types. Although specially designed to handle [_MARKDOWN_](https://en.wikipedia.org/wiki/Markdown) file, **`octapush.docs`** still supports other files like _HTM, HTML, XHTML, JPG, BMP, GIF, PNG, JS, CSS, C, TXT, and/or other file types_.
 6. Code preview with auto detect language support.
 7. Simple forum for each your document (next feature).
-8. You can host **`octapush.docs`** anywhere you want. But, in the future we will add free hosting and free subdomain (for the detail, see [Next Improvement](#Next Improvement) section.)
+8. You can host **`octapush.docs`** anywhere you want. But, in the future we will add free hosting and free subdomain (for the detail, see [Next Improvement](#nextimprovement) section.)
 9. Easy configuration. **`octapush.docs`** designed with easy installation and very minimal configuration.
 10. Lightweight, and not needing hosting with big bandwidth.
 

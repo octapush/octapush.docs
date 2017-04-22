@@ -25,7 +25,7 @@ As a simple explanation, **`octapush.docs`** is a file explorer (and viewer) for
 7. Simple forum for each your document (next feature).
 8. You can host **`octapush.docs`** anywhere you want. But, in the future we will add free hosting and free subdomain (for the detail, see [Next Improvement](#next-improvement) section).
 9. Easy installation. **`octapush.docs`** is designed only by using HTML5 and JavaScript technology to perform dynamic actions. So you do not have to worry about the type of _web-server_, version, or type of _operating-system_ you have. **`octapush.docs`** is only processed on the _client-side_. For the _server-side_, we use features from the [GitHub API](https://api.github.com/).
-10. Easy configuration. **`octapush.docs`** designed with easy installation and very minimal configuration.
+10. Easy configuration. **`octapush.docs`** designed with easy and very minimal configuration.
 11. Lightweight, and not needing hosting with big bandwidth.
 
 # How To Use

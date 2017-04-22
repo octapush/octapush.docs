@@ -110,9 +110,16 @@
 .off-canvas-sidebar .mini-logo,
 .off-canvas-sidebar[data-background-color="white"] .user,
 .off-canvas-sidebar[data-background-color="white"] .mini-logo {
-    border-bottom: 1px solid rgba(102, 97, 91, 0.3);
+    border-bottom: 1px solid rgba(102, 97, 91, 0.3) !important;
     position: relative;
     z-index: 4;
+}
+
+.sidebar .logo,
+.sidebar[data-background-color="white"] .logo,
+.off-canvas-sidebar .logo,
+.off-canvas-sidebar[data-background-color="white"] .logo {
+    border-bottom: 1px solid rgba(102, 97, 91, 0.3) !important;
 }
 
 .sidebar .logo:before,

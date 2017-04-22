@@ -49,6 +49,14 @@
             homepage: 'https://github.com/octapush/octapush.docs',
 
 
+            // Your initial page
+            // Will be loaded first while showing app.
+            initialPage: {
+                title: 'Home',
+                url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/9087473574e115a76a1d313cf59126ba0891da10'
+            },
+
+
             // Your github data property that will be fetched.
             githubData: {
                 // The owner name of project

@@ -60,7 +60,7 @@
                     $('head > title').text(s.application.title);
                 },
                 build: function(data) {
-                    $('a#document-title').text(data.title);
+                    $('a#document-title').text(_o_.string.capitalize(data.title, true));
 
                     if (s.specialMime.images.indexOf(data.extension) !== -1) {
                         var img = _o_.string.format('<img class="center-block" src="data:image/{1};base64,{2}" />', data.extension, data.content);

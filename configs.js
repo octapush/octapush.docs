@@ -32,25 +32,32 @@
         // Make the script will be executed or not.
         execScript: true,
 
+
         // Main application settings
         application: {
             // The title of your documentation
             title: 'OCTAPUSH.DOCS',
 
+
             // The URL of your homepage.
             homepage: 'https://github.com/octapush/octapush.docs',
+
 
             // The github API tree. This URL will be fetched as octapush.docs side menu tree structure.
             // To get your github API tree, you can change these your URL:
             // https://api.github.com/repos/(owner)/(project)/git/trees/(branch)
             githubApiTree: 'https://api.github.com/repos/octapush/octapush.docs/git/trees/334b0ecf6707137ef82ca9f4e996856adeaab5e8',
 
+
             appearances: {
                 sideMenu: {
+                    // The text-case that will be used on side menu
                     textCase: 'capitalize', // uppercase, lowercase, capitalize
 
+
                     // Side menu background color
-                    background: 'white', // white | brown,
+                    background: 'brown', // white | brown,
+
 
                     // Side menu font color
                     color: 'danger' // primary | info | success | warning | danger 
@@ -62,36 +69,50 @@
                     // Display only MD files.
                     showMdFilesOnly: false,
 
+
                     // Hide empty directory.
                     hideEmptyDirectory: true,
+
 
                     // The files that will be hided on side menu.
                     // Write the URL's only
                     hideFiles: [],
 
+
                     // Additional menus to put first on side menu.
                     // The menus will be sorted by position of Array.
-                    before: [{
-                        title: 'Introduction.md', // <== please assign extension of your file so we know how to handle it
-                        url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/06604fffa20ca740701b027072fe22b2352d8ac8'
-                    }, {
-                        title: 'photo.jpg', // <== please assign extension of your file so we know how to handle it
-                        url: 'https://api.github.com/repos/fadhly-permata/Resume/git/blobs/726ede6314c6433344c29dd796dc6502b558cf70'
-                    }, {
-                        title: 'site map.html', // <== please assign extension of your file so we know how to handle it
-                        url: 'https://api.github.com/repos/fadhly-permata/Resume/git/blobs/fa302ac628df630b284c2dae73c05cb9776d49bf'
-                    }],
+                    //
+                    // NOTE FOR THIS STATIC LINK:
+                    // - URL from api.github.com will be changed whenever you updating (create/update/delete) it.
+                    before: [
+                        {
+                            title: 'Introduction.md', // <== please assign extension of your file so we know how to handle it
+                            url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/37c7a413c318a27d9981f828f9554f66f00e8bb9'
+                        }, 
+                        {
+                            title: 'photo.jpg', // <== please assign extension of your file so we know how to handle it
+                            url: 'https://api.github.com/repos/fadhly-permata/Resume/git/blobs/726ede6314c6433344c29dd796dc6502b558cf70'
+                        }, {
+                            title: 'site map.html', // <== please assign extension of your file so we know how to handle it
+                            url: 'https://api.github.com/repos/fadhly-permata/Resume/git/blobs/fa302ac628df630b284c2dae73c05cb9776d49bf'
+                        }
+                    ],
+
 
                     // Additional menus to put below on side menu.
                     // The menus will be sorted by position of Array.
-                    after: [{
-                        title: 'Sample.js', // <== please assign extension of your file so we know how to handle it
-                        url: 'https://api.github.com/repos/octapush/octapushJS/git/blobs/8aeaecddaa63d29a1facedcc193e3518ad163918'
-                    }]
+                    after: [
+                        {
+                            title: 'Sample.js', // <== please assign extension of your file so we know how to handle it
+                            url: 'https://api.github.com/repos/octapush/octapushJS/git/blobs/8aeaecddaa63d29a1facedcc193e3518ad163918'
+                        }
+                    ]
                 },
 
+
                 // Additional links for footer.
-                footerLinks: [{
+                footerLinks: [
+                    {
                         title: 'Author',
                         url: 'http://fadhly.hol.es',
                         target: 'newTab' // self || newTab

@@ -20,8 +20,6 @@
  * any commented line on this files, except comment lines on the header. You are not
  * ALLOWED to remove this metadata lines.
  * 
- * TODO:
- * + BUILD SIDEBAR FOR MOBILE VERSION
  */
 
 (function(w, d, s) {
@@ -78,7 +76,7 @@
 
                         // handle as markup file
                         else if (s.specialMime.markup.indexOf(data.extension) !== -1) {
-                            $('div#document-wrapper').html('<div class="row"><iframe id="page-iframe" class="col-md-12" style="height: 80vh; position: relative; border:none;"></iframe></div>');
+                            $('div#document-wrapper').html('<div class="row"><iframe id="page-iframe" class="ps-add col-md-12" style="height: 80vh; position: relative; border:none;"></iframe></div>');
                             $('#page-iframe').on('load', function() {
                                 $(this).contents().find('body').html(data.content);
                             });
@@ -86,19 +84,29 @@
 
                         // for other file handle as text file
                         else {
-                            $('div#document-wrapper').html(_o_.string.format('<pre><code class="always-visible" style="height: 80vh; position: relative; overflow: hidden !important;">{1}</code></pre>', data.content));
-
-                            $('pre code').perfectScrollbar('destroy');
-                            $('pre code').perfectScrollbar();
+                            $('div#document-wrapper').html(_o_.string.format(
+                                '<pre><code class="ps-add always-visible" style="height: 80vh; position: relative; overflow: hidden !important;">{1}</code></pre>',
+                                data.content
+                            ));
                         }
 
-                        hljs.initHighlighting.called = false;
-                        hljs.initHighlighting();
+                        oDoc.ui.document.hljsReinit.apply();
                     }
+                },
+                hljsReinit: function() {
+                    hljs.initHighlighting.called = false;
+                    hljs.initHighlighting();
+
+                    var psAdd = $('pre > code.ps-add, iframe.ps-add');
+                    if (psAdd.length > 0)
+                        psAdd.perfectScrollbar('destroy');
+
+                    psAdd.perfectScrollbar();
                 }
             },
             sidebar: {
                 register: function() {
+                    oDoc.ui.sidebar.theme.apply();
                     oDoc.ui.sidebar.title.apply();
                     oDoc.ui.sidebar.listMenus.apply();
                 },
@@ -112,8 +120,17 @@
 
                     $('#sidebar-wrap').perfectScrollbar('destroy');
                     $('#sidebar-wrap').perfectScrollbar();
+                },
+                theme: function() {
+                    $('.sidebar').attr({
+                        'data-background-color': s.application.appearances.sideMenu.background,
+                        'data-active-color': s.application.appearances.sideMenu.color
+                    });
 
-                    console.log('pass');
+                    $('.off-canvas-sidebar').attr({
+                        'data-background-color': s.application.appearances.sideMenu.background,
+                        'data-active-color': s.application.appearances.sideMenu.color
+                    });
                 },
                 highlightActive: function(current) {
                     $('.sidebar ul.nav li').removeClass('active');
@@ -123,7 +140,7 @@
 
                     var theParent = cLi.parents('li');
                     while (theParent.length > 0) {
-                        theParent.addClass('active');
+                        theParent.addClass('active hide-before-after');
                         var theParent = theParent.parents('li');
                     }
                 },
@@ -197,7 +214,6 @@
                 register: function() {
                     w.onLoad = oDoc.events.windoc.onLoad(function() {
                         oDoc.events.windoc.onReady.apply();
-                        oDoc.events.sideMenu.items.apply();
                     });
                 },
                 onLoad: function(cb) {
@@ -212,6 +228,9 @@
                 onReady: function() {
                     $(function() {
                         oDoc.ui.register('ready');
+
+                        oDoc.events.sideMenu.items.apply();
+                        oDoc.events.sideMenu.toggler.apply();
                     });
                 }
             },
@@ -241,9 +260,22 @@
                             oDoc.ui.sidebar.highlightActive(that);
 
                             return false;
+
                         } else {
                             $('#sidebar-wrap').perfectScrollbar('update');
                         }
+                    });
+                },
+                toggler: function() {
+                    $('button.navbar-toggle').on('click', function() {
+                        $('#sidebar-wrap').toggle(0, function() {
+                            if ($('#sidebar-wrap').css('display') === 'none')
+                                $('div.main-panel').css('width', '100%');
+
+                            else
+                                $('div.main-panel').css('width', 'calc(100% - 260px)');
+                            $('#sidebar-wrap').perfectScrollbar('update');
+                        });
                     });
                 }
             }

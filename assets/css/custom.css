@@ -172,6 +172,10 @@
     border: 4px solid rgba(0, 0, 0, 0.15);
 }
 
+.sidebar[data-background-color="brown"] {
+    background-color: #66615b !important;
+}
+
 .sidebar[data-background-color="brown"]:after,
 .sidebar[data-background-color="brown"]:before,
 .off-canvas-sidebar[data-background-color="brown"]:after,
@@ -186,6 +190,13 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     position: relative;
     z-index: 4;
+}
+
+.sidebar .logo,
+.sidebar[data-background-color="brown"] .logo,
+.off-canvas-sidebar .logo,
+.off-canvas-sidebar[data-background-color="brown"] .logo {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
 .sidebar[data-background-color="brown"] .logo:before,
@@ -279,6 +290,11 @@
 
 ul.nav ul.nav {
     padding-left: 25px !important;
+}
+
+.hide-before-after > a::before,
+.hide-before-after > a::after {
+    display: none !important;
 }
 
 

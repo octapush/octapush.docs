@@ -27,11 +27,11 @@
 
     s = Object.assign(s, {
         octapushJS: {
-            pluginUrl: 'http://localhost/octapushJS/plugins/',
-            loadPlugin: ['string', 'array']
+            pluginUrl: 'https://cdn.rawgit.com/octapush/octapushJS/418319e3/plugins/',
+            loadPlugin: ['array']
         },
         specialMime: {
-            images: ['jpg', 'jpeg', 'gif', 'png'],
+            images: ['jpg', 'jpeg', 'gif', 'png', 'svg', 'bmp'],
             markup: ['htm', 'html', 'xhtml']
         }
     });
@@ -57,7 +57,7 @@
                     oDoc.ui.document.replaceWrapperScrollBar.apply();
                 },
                 title: function() {
-                    $('head > title').text(s.application.title);
+                    $('head > title').text(_o_.string.capitalize(s.application.title, true));
                 },
                 build: function(data) {
                     $('a#document-title').text(data.title);
@@ -93,6 +93,9 @@
 
                         oDoc.ui.document.hljsReinit.apply();
                     }
+
+                    $('div.main-panel').scrollTop(0);
+                    $('div.main-panel').perfectScrollbar('update');
                 },
                 hljsReinit: function() {
                     hljs.initHighlighting.called = false;
@@ -115,7 +118,9 @@
                 register: function() {
                     oDoc.ui.sidebar.theme.apply();
                     oDoc.ui.sidebar.title.apply();
-                    oDoc.ui.sidebar.listMenus.apply();
+
+                    oDoc.helper.common.github.fetchMenuFromRepo.apply();
+                    //oDoc.ui.sidebar.listMenus.apply();
                 },
                 title: function() {
                     $('.sidebar .logo a').text(s.application.title);
@@ -125,7 +130,6 @@
                         .removeClass('capitalize uppercase lowercase')
                         .addClass(s.application.appearances.sideMenu.textCase);
 
-                    $('#sidebar-wrap').perfectScrollbar('destroy');
                     $('#sidebar-wrap').perfectScrollbar();
                 },
                 theme: function() {
@@ -151,7 +155,7 @@
                         var theParent = theParent.parents('li');
                     }
                 },
-                listMenus: function() {
+                listMenus: function(url) {
                     function constructMenu(xhr) {
                         function buildStruct(dMenu) {
                             var sMenu = '';
@@ -184,17 +188,17 @@
                         oDoc.ui.sidebar.style.apply();
                     }
 
-                    // _o_.ajax.get({
-                    //     url: _o_.string.concat(s.application.githubApiTree, '?recursive=1'),
-                    //     success: function(xhr) {
-                    //         if (!xhr.responseText)
-                    //             return;
+                    _o_.ajax.get({
+                        url: _o_.string.format('{1}?recursive=1', url),
+                        success: function(xhr) {
+                            if (!xhr.responseText)
+                                return;
 
-                    //         xhr = JSON.parse(xhr.responseText);
-                    //         constructMenu(xhr)
-                    //     }
-                    // });
-                    constructMenu(s.sampleData);
+                            xhr = JSON.parse(xhr.responseText);
+                            constructMenu(xhr);
+                        }
+                    });
+                    //constructMenu(s.sampleData);
                 }
             },
             footer: {
@@ -205,8 +209,7 @@
                     var sFooter = '';
 
                     _o_.utility.each(s.application.additionalData.footerLinks, function(key, val) {
-                        val.target = _o_.string.isEqual(_o_.string.toLower(val.target), 'newtab') ? 'target="blank"' : ' ';
-                        sFooter += _o_.string.template('<li><a href="{{url}}"{{target}}>{{title}}</a></li>', val);
+                        sFooter += _o_.string.template('<li><a href="{{url}}" target="_blank">{{title}}</a></li>', val);
                     });
 
                     $('.footer > .container-fluid > nav').html(_o_.string.format('<ul>{1}</ul>', sFooter));
@@ -248,6 +251,8 @@
 
                         var isParent = that.data('toggle') !== undefined;
                         if (!isParent) {
+                            Pace.restart();
+
                             _o_.ajax.get({
                                 url: that.attr('href'),
                                 success: function(xhr) {
@@ -270,6 +275,7 @@
 
                         } else {
                             $('#sidebar-wrap').perfectScrollbar('update');
+                            //$('#sidebar-wrap').perfectScrollbar();
                         }
                     });
                 },
@@ -327,6 +333,27 @@
                         return true;
                     else
                         return false;
+                },
+                github: {
+                    fetchMenuFromRepo: function() {
+                        _o_.ajax.get({
+                            url: _o_.string.template('https://api.github.com/repos/{{owner}}/{{project}}/git/trees/{{branch}}', s.application.githubData),
+                            success: function(xhr) {
+                                if (!xhr.responseText)
+                                    return;
+
+                                xhr = JSON.parse(xhr.responseText);
+
+                                xhr.tree = xhr.tree.filter(function(i) {
+                                    if (_o_.string.isEqual(i.path, s.application.githubData.documentDirectory))
+                                        return i;
+                                });
+
+                                if ((xhr.tree).length > 0)
+                                    oDoc.ui.sidebar.listMenus(xhr.tree[0].url);
+                            }
+                        });
+                    }
                 }
             },
             sideMenu: {

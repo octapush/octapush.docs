@@ -20,11 +20,11 @@ As a simple explanation, **`octapush.docs`** is a file explorer (and viewer) for
 2. **`octapush.docs`** is designed with a simple and beautiful look.
 3. **`octapush.docs`** using a responsive design that supports a wide range of the latest browser technologies both on desktop computers and on mobile browsers thanks to the use of [Bootstrap](https://getbootstrap.com/about/#team) technology.
 4. **`octapush.docs`** makes it easy to present your documentation, by updating (create, update, remove) your files from [GitHub](https://github.com), then **`octapush.docs`** will be updated automatically.
-5. Although specially designed to handle [_MARKDOWN_](https://en.wikipedia.org/wiki/Markdown) file, **`octapush.docs`** still supports other files like _HTM, HTML, XHTML, JPG, JPEG, PNG, JS, CSS, C, or other script files,_ and more.
+5. Have capability to handle lot file types. Although specially designed to handle [_MARKDOWN_](https://en.wikipedia.org/wiki/Markdown) file, **`octapush.docs`** still supports other files like _HTM, HTML, XHTML, JPG, BMP, GIF, PNG, JS, CSS, C, TXT, and/or other file types_.
 6. Code preview with auto detect language support.
-7. Easy configuration.
-8. Simple forum for each your document (next feature).
-9. Easy Hosting (In the future we will add free hosting and free subdomain).
+7. Simple forum for each your document (next feature).
+8. You can host **`octapush.docs`** anywhere you want. But, in the future we will add free hosting and free subdomain (for the detail, see [Next Improvement](#Next Improvement) section.)
+9. Easy configuration. **`octapush.docs`** designed with easy installation and very minimal configuration.
 10. Lightweight, and not needing hosting with big bandwidth.
 
 # How To Use
@@ -40,6 +40,14 @@ After following four steps above, you can use and access your documentation.
 
 # Live Demo & Detail Documentation
 You can access the live demo which is also a detailed documentation of **`octapush.docs`** usage [from here](http://fadhly.hol.es)
+
+# Next Improvement
+We have lot improvement idea (plan), there are (included but not limited to):
+- Free Hosting with free subdomain
+- Add Comment for each documentation page
+- Theme changer
+- Multi language page
+- etc..
 
 
 # Developer Message

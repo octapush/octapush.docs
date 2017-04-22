@@ -60,7 +60,7 @@ And, If you get any bug's or error's on **`octapush.docs`**, you can report to u
 We will fix all of the issues and/or bugs as soon as possible.
 
 # Fork And Download
-You can freely fork or download **`octapush.docs`** with certain licenses you can see here.
+You can freely fork or download **`octapush.docs`** with certain [licenses you can see here](https://github.com/octapush/octapush.docs/blob/master/LICENSE).
 
 
 # Developer Message

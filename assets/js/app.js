@@ -57,7 +57,7 @@
                     oDoc.ui.document.replaceWrapperScrollBar.apply();
                 },
                 title: function() {
-                    $('head > title').text(_o_.string.capitalize(s.application.title, true));
+                    $('head > title').text(s.application.title);
                 },
                 build: function(data) {
                     $('a#document-title').text(data.title);
@@ -71,7 +71,11 @@
 
                         // handle as MD file
                         if (_o_.string.isEqual(_o_.string.toLower(data.extension), 'md')) {
-                            var mdConverter = new showdown.Converter();
+                            var mdConverter = new showdown.Converter({
+                                ghCompatibleHeaderId: true,
+                                simplifiedAutoLink: s.application.appearances.markdown.convertUrlIntoAnchor,
+                                tables: true
+                            });
                             $('div#document-wrapper').html(mdConverter.makeHtml(data.content));
                         }
 

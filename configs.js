@@ -64,11 +64,16 @@
 
 
                 // The directory name inside your project, that will be used as documentation folder.
+                // DO NOT USE NESTED DIRECTORY!!!
                 documentDirectory: 'docs-data'
             },
 
 
             appearances: {
+                markdown: {
+                    // Change all url on your MD files into hyperlink (anchor)
+                    convertUrlIntoAnchor: true
+                },
                 sideMenu: {
                     // The text-case that will be used on side menu
                     textCase: 'capitalize', // uppercase, lowercase, capitalize
@@ -111,7 +116,7 @@
                     before: [
                         {
                             title: 'introduction.md', // <== please assign extension of your file so we know how to handle it
-                            url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/b2a42dc81a69626a8450f521924363b0f85fc95d'
+                            url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/9087473574e115a76a1d313cf59126ba0891da10'
                         },
                         {
                             title: 'download.md', // <== please assign extension of your file so we know how to handle it

@@ -23,9 +23,10 @@ As a simple explanation, **`octapush.docs`** is a file explorer (and viewer) for
 5. Have capability to handle lot file types. Although specially designed to handle [_MARKDOWN_](https://en.wikipedia.org/wiki/Markdown) file, **`octapush.docs`** still supports other files like _HTM, HTML, XHTML, JPG, BMP, GIF, PNG, JS, CSS, C, TXT, and/or other file types_.
 6. Code preview with auto detect language support.
 7. Simple forum for each your document (next feature).
-8. You can host **`octapush.docs`** anywhere you want. But, in the future we will add free hosting and free subdomain (for the detail, see [Next Improvement](#nextimprovement) section).
-9. Easy configuration. **`octapush.docs`** designed with easy installation and very minimal configuration.
-10. Lightweight, and not needing hosting with big bandwidth.
+8. You can host **`octapush.docs`** anywhere you want. But, in the future we will add free hosting and free subdomain (for the detail, see [Next Improvement](#next-improvement) section).
+9. Easy installation. **`octapush.docs`** is designed only by using HTML5 and JavaScript technology to perform dynamic actions. So you do not have to worry about the type of _web-server_, version, or type of _operating-system_ you have. **`octapush.docs`** is only processed on the _client-side_. For the _server-side_, we use features from the [GitHub API](https://api.github.com/).
+10. Easy configuration. **`octapush.docs`** designed with easy installation and very minimal configuration.
+11. Lightweight, and not needing hosting with big bandwidth.
 
 # How To Use
 To use **`octapush.docs`**, you only need to follow 3 easy steps like the following:
@@ -42,12 +43,19 @@ After following four steps above, you can use and access your documentation.
 You can access the live demo which is also a detailed documentation of **`octapush.docs`** usage [from here](http://fadhly.hol.es)
 
 # Next Improvement
-We have lot improvement idea (plan), there are (included but not limited to):
-- Free Hosting with free subdomain
-- Add Comment for each documentation page
-- Theme changer
-- Multi language page
+We have lot improvement ideas (plans), there are (included but not limited to):
+- Free Hosting with free subdomain.
+- Add Comment for each documentation page.
+- Multi languages page.
+- Theme changer.
 - etc..
+
+You can see our other plans from [here](https://github.com/octapush/octapush.docs/projects/1).
+
+# Issues
+Ofcourse, since the developer as human sometimes doing some error or mistake. So, We have listed our issues in [here](https://github.com/octapush/octapush.docs/issues).
+
+And, If you get any bug's or error's on **`octapush.docs`**, you can report to us [on this page](https://github.com/octapush/octapush.docs/issues/new).
 
 
 # Developer Message

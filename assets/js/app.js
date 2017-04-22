@@ -293,22 +293,39 @@
                             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
                         }).join(''));
                     }
+                },
+                arrayContainString: function(arr, check) {
+                    check = _o_.string.toLower(check);
+                    arr = arr.map(function(i) {
+                        return _o_.string.toLower(i);
+                    });
+
+                    for (let i = 0; i < arr.length; i++)
+                        if (_o_.string.isContain(check, arr[i]) === true)
+                            return true;
+
+                    return false;
                 }
             },
             sideMenu: {
                 dataFilter: function(data) {
                     data = data.filter(function(i) {
-                        if (_o_.string.isEqual(i.type, 'tree')) {
-                            if (!s.application.additionalData.sideMenu.hideEmptyDirectory)
-                                return i;
-
-                        } else {
-                            if (!s.application.additionalData.sideMenu.showMdFilesOnly) {
-                                return i;
+                        if (
+                            (s.application.additionalData.sideMenu.hideFilesOrDirectory).length > 0 &&
+                            !oDoc.helper.common.arrayContainString(s.application.additionalData.sideMenu.hideFilesOrDirectory, i.path)
+                        ) {
+                            if (_o_.string.isEqual(i.type, 'tree')) {
+                                if (!s.application.additionalData.sideMenu.hideEmptyDirectory)
+                                    return i;
 
                             } else {
-                                if (_o_.string.isEndsWith(_o_.string.toLower(i.path), '.md'))
+                                if (!s.application.additionalData.sideMenu.showMdFilesOnly) {
                                     return i;
+
+                                } else {
+                                    if (_o_.string.isEndsWith(_o_.string.toLower(i.path), '.md'))
+                                        return i;
+                                }
                             }
                         }
                     });
@@ -316,7 +333,7 @@
                     return oDoc.helper.sideMenu.insertAdditionals(data);
                 },
                 insertAdditionals: function(data) {
-                    var before = s.application.additionalData.sideMenu.before;
+                    let before = s.application.additionalData.sideMenu.before;
                     if (before.length > 0)
                         _o_.utility.each(before, function(key, val) {
                             data.unshift({
@@ -326,7 +343,7 @@
                             });
                         });
 
-                    var after = s.application.additionalData.sideMenu.after;
+                    let after = s.application.additionalData.sideMenu.after;
                     if (after.length > 0)
                         _o_.utility.each(after, function(key, val) {
                             data.push({

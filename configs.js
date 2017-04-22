@@ -28,9 +28,9 @@
 
 (function(w) {
     'use strict';
-    var configurations = {
+    let configurations = {
         // Make the script will be executed or not.
-        execScript: true,
+        execScript: true, // NOT RECOMMENDED to change this setting!!!!
 
 
         // Main application settings
@@ -75,8 +75,11 @@
 
 
                     // The files that will be hided on side menu.
-                    // Write the URL's only
-                    hideFiles: [],
+                    // Write the github api PATH's only, and write inside quote, and comma separated.
+                    hideFilesOrDirectory: [
+                        'Hidden Directory', // <== This Directory will be hidden (include files inside it)
+                        'Editing Documents/Hidden File.MD' // <== This file will be hidden
+                    ],
 
 
                     // Additional menus to put first on side menu.
@@ -86,15 +89,12 @@
                     // - URL from api.github.com will be changed whenever you updating (create/update/delete) it.
                     before: [
                         {
-                            title: 'Introduction.md', // <== please assign extension of your file so we know how to handle it
+                            title: 'introduction.md', // <== please assign extension of your file so we know how to handle it
                             url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/37c7a413c318a27d9981f828f9554f66f00e8bb9'
-                        }, 
+                        },
                         {
-                            title: 'photo.jpg', // <== please assign extension of your file so we know how to handle it
-                            url: 'https://api.github.com/repos/fadhly-permata/Resume/git/blobs/726ede6314c6433344c29dd796dc6502b558cf70'
-                        }, {
-                            title: 'site map.html', // <== please assign extension of your file so we know how to handle it
-                            url: 'https://api.github.com/repos/fadhly-permata/Resume/git/blobs/fa302ac628df630b284c2dae73c05cb9776d49bf'
+                            title: 'download.md', // <== please assign extension of your file so we know how to handle it
+                            url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/37c7a413c318a27d9981f828f9554f66f00e8bb9'
                         }
                     ],
 
@@ -103,7 +103,11 @@
                     // The menus will be sorted by position of Array.
                     after: [
                         {
-                            title: 'Sample.js', // <== please assign extension of your file so we know how to handle it
+                            title: 'authors.md', // <== please assign extension of your file so we know how to handle it
+                            url: 'https://api.github.com/repos/octapush/octapushJS/git/blobs/8aeaecddaa63d29a1facedcc193e3518ad163918'
+                        },
+                        {
+                            title: 'license.md', // <== please assign extension of your file so we know how to handle it
                             url: 'https://api.github.com/repos/octapush/octapushJS/git/blobs/8aeaecddaa63d29a1facedcc193e3518ad163918'
                         }
                     ]
@@ -123,7 +127,7 @@
                         target: 'self' // self || newTab
                     }, ,
                     {
-                        title: 'Dependecies',
+                        title: 'Download',
                         url: 'links3.md',
                         target: 'self' // self || newTab
                     }

@@ -94,21 +94,20 @@
                         },
                         {
                             title: 'download.md', // <== please assign extension of your file so we know how to handle it
-                            url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/37c7a413c318a27d9981f828f9554f66f00e8bb9'
+                            url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391'
                         }
                     ],
-
 
                     // Additional menus to put below on side menu.
                     // The menus will be sorted by position of Array.
                     after: [
                         {
                             title: 'authors.md', // <== please assign extension of your file so we know how to handle it
-                            url: 'https://api.github.com/repos/octapush/octapushJS/git/blobs/8aeaecddaa63d29a1facedcc193e3518ad163918'
+                            url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391'
                         },
                         {
                             title: 'license.md', // <== please assign extension of your file so we know how to handle it
-                            url: 'https://api.github.com/repos/octapush/octapushJS/git/blobs/8aeaecddaa63d29a1facedcc193e3518ad163918'
+                            url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391'
                         }
                     ]
                 },

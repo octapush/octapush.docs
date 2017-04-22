@@ -333,31 +333,29 @@
                     return oDoc.helper.sideMenu.insertAdditionals(data);
                 },
                 insertAdditionals: function(data) {
-                    let before = s.application.additionalData.sideMenu.before;
+                    let before = (s.application.additionalData.sideMenu.before).reverse();
                     if (before.length > 0)
-                        _o_.utility.each(before, function(key, val) {
+                        for (let i = 0; i < before.length; i++)
                             data.unshift({
-                                path: val.title,
-                                url: val.url,
+                                path: before[i].title,
+                                url: before[i].url,
                                 type: 'blob'
                             });
-                        });
 
-                    let after = s.application.additionalData.sideMenu.after;
+                    let after = (s.application.additionalData.sideMenu.after).reverse();
                     if (after.length > 0)
-                        _o_.utility.each(after, function(key, val) {
+                        for (let i = 0; i < after.length; i++)
                             data.push({
-                                path: val.title,
-                                url: val.url,
+                                path: after[i].title,
+                                url: after[i].url,
                                 type: 'blob'
                             });
-                        });
 
                     return data;
                 },
                 dataBuilder: function(data) {
                     function mapData(obj, paths, val) {
-                        var path, arrayInfo;
+                        let path, arrayInfo;
 
                         if (paths.length === 0)
                             return val;

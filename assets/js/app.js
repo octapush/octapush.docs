@@ -54,6 +54,7 @@
             document: {
                 register: function() {
                     oDoc.ui.document.title.apply();
+                    oDoc.ui.document.replaceWrapperScrollBar.apply();
                 },
                 title: function() {
                     $('head > title').text(s.application.title);
@@ -102,6 +103,12 @@
                         psAdd.perfectScrollbar('destroy');
 
                     psAdd.perfectScrollbar();
+                },
+                replaceWrapperScrollBar: function() {
+                    if (!oDoc.helper.common.isMobileBrowser())
+                        $('div.main-panel')
+                        .css('overflow', 'hidden !important')
+                        .perfectScrollbar();
                 }
             },
             sidebar: {
@@ -272,9 +279,10 @@
                             if ($('#sidebar-wrap').css('display') === 'none')
                                 $('div.main-panel').css('width', '100%');
 
-                            else
+                            else {
                                 $('div.main-panel').css('width', 'calc(100% - 260px)');
-                            $('#sidebar-wrap').perfectScrollbar('update');
+                                $('#sidebar-wrap').perfectScrollbar('update');
+                            }
                         });
                     });
                 }
@@ -305,6 +313,20 @@
                             return true;
 
                     return false;
+                },
+                isMobileBrowser: function() {
+                    if (
+                        navigator.userAgent.match(/Android/i) ||
+                        navigator.userAgent.match(/webOS/i) ||
+                        navigator.userAgent.match(/iPhone/i) ||
+                        navigator.userAgent.match(/iPad/i) ||
+                        navigator.userAgent.match(/iPod/i) ||
+                        navigator.userAgent.match(/BlackBerry/i) ||
+                        navigator.userAgent.match(/Windows Phone/i)
+                    )
+                        return true;
+                    else
+                        return false;
                 }
             },
             sideMenu: {

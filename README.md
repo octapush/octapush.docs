@@ -52,10 +52,15 @@ We have lot improvement ideas (plans), there are (included but not limited to):
 
 You can see our other plans from [here](https://github.com/octapush/octapush.docs/projects/1).
 
-# Issues
-Ofcourse, since the developer as human sometimes doing some error or mistake. So, We have listed our issues in [here](https://github.com/octapush/octapush.docs/issues).
+# Issues and/or Bugs
+Of course, since we as human sometimes doing some error or mistake. So, We have listed our issues in [here](https://github.com/octapush/octapush.docs/issues).
 
 And, If you get any bug's or error's on **`octapush.docs`**, you can report to us [on this page](https://github.com/octapush/octapush.docs/issues/new).
+
+We will fix all of the issues and/or bugs as soon as possible.
+
+# Fork And Download
+You can freely fork or download **`octapush.docs`** with certain licenses you can see here.
 
 
 # Developer Message

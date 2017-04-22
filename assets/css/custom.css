@@ -288,3 +288,19 @@ ul.nav ul.nav {
     white-space: pre !important;
     overflow-x: auto !important;
 }
+
+
+/* 
+perfect scrollbar
+to make scrollbars always visible 
+*/
+
+.always-visible.ps-container>.ps-scrollbar-x-rail,
+.always-visible.ps-container>.ps-scrollbar-y-rail {
+    opacity: 0.6;
+}
+
+.ps-scrollbar-y-rail,
+.ps-scrollbar-x-rail {
+    z-index: 999
+}

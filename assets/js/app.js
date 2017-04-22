@@ -20,6 +20,8 @@
  * any commented line on this files, except comment lines on the header. You are not
  * ALLOWED to remove this metadata lines.
  * 
+ * TODO:
+ * + BUILD SIDEBAR FOR MOBILE VERSION
  */
 
 (function(w, d, s) {
@@ -84,7 +86,10 @@
 
                         // for other file handle as text file
                         else {
-                            $('div#document-wrapper').html(_o_.string.format('<pre><code style="height: 80vh; position: relative;">{1}</code></pre>', data.content));
+                            $('div#document-wrapper').html(_o_.string.format('<pre><code class="always-visible" style="height: 80vh; position: relative; overflow: hidden !important;">{1}</code></pre>', data.content));
+
+                            $('pre code').perfectScrollbar('destroy');
+                            $('pre code').perfectScrollbar();
                         }
 
                         hljs.initHighlighting.called = false;
@@ -105,10 +110,8 @@
                         .removeClass('capitalize uppercase lowercase')
                         .addClass(s.application.appearances.sideMenu.textCase);
 
-                    $('.scroll-wrapper').scrollbar();
-
-                    // $('.sidebar > .sidebar-wrapper').perfectScrollbar('destroy');
-                    // $('.sidebar > .sidebar-wrapper').perfectScrollbar({ suppressScrollX: true, maxScrollbarLength: 200 });
+                    $('#sidebar-wrap').perfectScrollbar('destroy');
+                    $('#sidebar-wrap').perfectScrollbar();
 
                     console.log('pass');
                 },
@@ -238,6 +241,8 @@
                             oDoc.ui.sidebar.highlightActive(that);
 
                             return false;
+                        } else {
+                            $('#sidebar-wrap').perfectScrollbar('update');
                         }
                     });
                 }

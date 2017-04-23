@@ -16,9 +16,10 @@
  * 
  * =================================================================================
  * 
- * It's recommended to pack file to make sure octapush.docs is loaded faster. Remove
- * any commented line on this files, except comment lines on the header. You are not
- * ALLOWED to remove this metadata lines.
+ * It's recommended to pack this file to make sure octapush.docs is loaded faster. 
+ * Remove any commented line on this files, except comment lines on the header. 
+ * 
+ * You are not ALLOWED to remove this metadata lines.
  * 
  */
 
@@ -59,7 +60,7 @@
                 title: function() {
                     $('head > title').text(s.application.title);
                 },
-                build: function(data) {
+                update: function(data) {
                     $('a#document-title').text(_o_.string.capitalize(data.title, true));
 
                     if (s.specialMime.images.indexOf(data.extension) !== -1) {
@@ -72,8 +73,8 @@
                         // handle as MD file
                         if (_o_.string.isEqual(_o_.string.toLower(data.extension), 'md')) {
                             var mdConverter = new showdown.Converter({
-                                ghCompatibleHeaderId: true,
                                 simplifiedAutoLink: s.application.appearances.markdown.convertUrlIntoAnchor,
+                                ghCompatibleHeaderId: true,
                                 tables: true
                             });
                             $('div#document-wrapper').html(mdConverter.makeHtml(data.content));
@@ -96,6 +97,7 @@
                         }
 
                         oDoc.ui.document.hljsReinit.apply();
+                        oDoc.events.document.register.apply();
                     }
 
                     $('div.main-panel').scrollTop(0);
@@ -124,7 +126,6 @@
                     oDoc.ui.sidebar.title.apply();
 
                     oDoc.helper.common.github.fetchMenuFromRepo.apply();
-                    //oDoc.ui.sidebar.listMenus.apply();
                 },
                 title: function() {
                     $('.sidebar .logo a').text(s.application.title);
@@ -170,7 +171,12 @@
                                     var title = _o_.array.removeLast(arrName, 0).join('');
                                     var extension = _o_.array.takeLast(arrName).join('');
 
-                                    sMenu += _o_.string.format('<li><a href="{1}" data-extension="{3}"><p>{2}</p></a></li>', val, title, extension);
+                                    sMenu += _o_.string.format(
+                                        '<li><a href="{1}" data-extension="{3}"><p>{2}</p></a></li>',
+                                        _o_.string.concat('#', val),
+                                        title,
+                                        extension
+                                    );
 
                                 } else {
                                     var sTemp = '<li><a data-toggle="collapse" href="#{2}" aria-expanded="false"><p>{1}<b class="caret"></b></p></a>'
@@ -182,6 +188,7 @@
                                     sMenu += _o_.string.format(sTemp, key, _o_.string.dasherize(key));
                                 }
                             });
+
                             return sMenu;
                         }
 
@@ -202,7 +209,6 @@
                             constructMenu(xhr);
                         }
                     });
-                    //constructMenu(s.sampleData);
                 }
             },
             footer: {
@@ -245,6 +251,7 @@
 
                         oDoc.events.sideMenu.items.apply();
                         oDoc.events.sideMenu.toggler.apply();
+                        oDoc.events.document.register.apply();
                     });
                 }
             },
@@ -257,15 +264,18 @@
                         if (!isParent) {
                             Pace.restart();
 
+                            let url = _o_.string.removeLeft(that.attr('href'), 1);
+                            oDoc.helper.common.setHash(url);
+
                             _o_.ajax.get({
-                                url: that.attr('href'),
+                                url: url,
                                 success: function(xhr) {
                                     if (!xhr.responseText)
                                         return;
 
                                     xhr = JSON.parse(xhr.responseText);
 
-                                    oDoc.ui.document.build({
+                                    oDoc.ui.document.update({
                                         title: that.text(),
                                         extension: that.data('extension'),
                                         content: xhr.content
@@ -279,7 +289,6 @@
 
                         } else {
                             $('#sidebar-wrap').perfectScrollbar('update');
-                            //$('#sidebar-wrap').perfectScrollbar();
                         }
                     });
                 },
@@ -296,10 +305,69 @@
                         });
                     });
                 }
+            },
+            document: {
+                register: function() {
+                    oDoc.events.document.links.register.apply();
+                },
+                links: {
+                    register: function() {
+                        oDoc.events.document.links.click.apply();
+                    },
+                    click: function() {
+                        $('div.main-panel a[href]')
+                            .off('click')
+                            .on('click', function(e) {
+                                e.preventDefault();
+
+                                var that = $(this);
+                                var href = that.attr('href');
+
+                                // handle anchored link
+                                if (_o_.string.isStartsWith(href, '#')) {
+                                    oDoc.helper.common.setHash(href, false);
+                                    return false;
+                                }
+
+                                // handle email link
+                                else if (_o_.string.isStartsWith(href, 'mailto:')) {
+                                    return true;
+                                }
+
+                                // handle outside link
+                                else {
+                                    let win = w.open(href);
+                                    if (win)
+                                        win.focus();
+                                    else
+                                        alert('Please allow popup for this site.');
+
+                                    return false;
+                                }
+                            });
+                    }
+                }
             }
         },
         helper: {
             common: {
+                appLocation: function(withHash) {
+                    withHash = _o_.utility.ifNull(withHash, false);
+                    return withHash ? (w.location + '').toString() : w.location.toString().replace(w.location.hash, '');
+                },
+                getHashes: function(outAsArray) {
+                    outAsArray = _o_.utility.ifNull(outAsArray, false);
+                    return !outAsArray ? w.location.hash.substr(1).split('#') : w.location.hash;
+                },
+                setHash: function(newHash, removeOld) {
+                    removeOld = _o_.utility.ifNull(removeOld, true);
+
+                    if (removeOld)
+                        w.location.hash = newHash;
+
+                    else
+                        w.location.hash = _o_.string.format('{1}#{2}', oDoc.helper.common.getHashes(), newHash);
+                },
                 encoding: {
                     stringToBase64: function(str) {
                         return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
@@ -390,7 +458,7 @@
                     if (before.length > 0)
                         for (let i = 0; i < before.length; i++)
                             data.unshift({
-                                path: before[i].title,
+                                path: _o_.string.format('{1}.{2}', before[i].title, before[i].renderAs),
                                 url: before[i].url,
                                 type: 'blob'
                             });
@@ -399,7 +467,7 @@
                     if (after.length > 0)
                         for (let i = 0; i < after.length; i++)
                             data.push({
-                                path: after[i].title,
+                                path: _o_.string.format('{1}.{2}', after[i].title, after[i].renderAs),
                                 url: after[i].url,
                                 type: 'blob'
                             });
@@ -436,7 +504,10 @@
                     data = oDoc.helper.sideMenu.dataFilter(data);
 
                     _o_.utility.each(data, function(key, val) {
-                        result = mapData(result, val.path.split('/'), val.type === 'tree' ? {} : val.url);
+                        result = mapData(
+                            result,
+                            val.path.split('/'), val.type === 'tree' ? {} : val.url
+                        );
                     });
 
                     return result;

@@ -15,6 +15,8 @@ With `octapush.docs`, you simply change (create, update, or delete) your documen
 
 As a simple explanation, **`octapush.docs`** is a file explorer (and viewer) for your documentation files stored in [GitHub](https://github.com). And display it according to the format of each file.
 
+----
+
 # Reasons to Use **`octapush.docs`**
 1. No need coding ability.
 2. **`octapush.docs`** is designed with a simple and beautiful look.
@@ -28,6 +30,8 @@ As a simple explanation, **`octapush.docs`** is a file explorer (and viewer) for
 10. Easy configuration. **`octapush.docs`** designed with easy and very minimal configuration.
 11. Lightweight, and not needing hosting with big bandwidth.
 
+----
+
 # How To Use
 To use **`octapush.docs`**, you only need to follow 3 easy steps like the following:
 1. Download the full package of **`octapush.docs`** from GitHub: [https://github.com/octapush/octapush.docs]().
@@ -39,8 +43,12 @@ And then FINISH.
 
 After following four steps above, you can use and access your documentation.
 
+----
+
 # Live Demo & Detail Documentation
 You can access the live demo which is also a detailed documentation of **`octapush.docs`** usage [from here](http://fadhly.hol.es)
+
+----
 
 # Next Improvement
 We have lot improvement ideas (plans), there are (included but not limited to):
@@ -50,7 +58,9 @@ We have lot improvement ideas (plans), there are (included but not limited to):
 - Theme changer.
 - etc..
 
-You can see our other plans from [here](https://github.com/octapush/octapush.docs/projects/1).
+You can see our other plans from [here](https://github.com/octapush/octapush.docs/projects/1?fullscreen=true).
+
+----
 
 # Issues and/or Bugs
 Of course, since we as human sometimes doing some error or mistake. So, We have listed our issues in [here](https://github.com/octapush/octapush.docs/issues).
@@ -59,9 +69,12 @@ And, If you get any bug's or error's on **`octapush.docs`**, you can report to u
 
 We will fix all of the issues and/or bugs as soon as possible.
 
+----
+
 # Fork And Download
 You can freely fork or download **`octapush.docs`** with certain [licenses you can see here](https://github.com/octapush/octapush.docs/blob/master/LICENSE).
 
+----
 
 # Developer Message
 In the current state **`octapush.docs`** is still in the development stage, and not ready for production use.

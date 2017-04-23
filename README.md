@@ -45,7 +45,7 @@ After following four steps above, you can use and access your documentation.
 
 ----
 
-# Live Demo & Detail Documentation
+# Demo and Documentation
 You can access the live demo which is also a detailed documentation of **`octapush.docs`** usage [from here](http://fadhly.hol.es)
 
 ----
@@ -72,7 +72,7 @@ We will fix all of the issues and/or bugs as soon as possible.
 ----
 
 # Fork And Download
-You can freely fork or download **`octapush.docs`** with certain [licenses you can see here](https://github.com/octapush/octapush.docs/blob/master/LICENSE).
+You can freely fork or [download **`octapush.docs`**](https://github.com/octapush/octapush.docs) with certain [licenses you can see here](https://github.com/octapush/octapush.docs/blob/master/LICENSE).
 
 ----
 

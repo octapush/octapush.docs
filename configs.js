@@ -46,6 +46,9 @@
         execScript: true,
 
 
+        animationSpeed: 250,
+
+
         // Main application settings
         application: {
             /**
@@ -200,7 +203,7 @@
                     before: [
                         {
                             title: 'introduction',
-                            url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/9087473574e115a76a1d313cf59126ba0891da10',
+                            url: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/c94e1021e8f80bd434f1b7bbc8c788f8b75ff838',
                             renderAs: 'md'
                         },
                         {

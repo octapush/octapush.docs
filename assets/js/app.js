@@ -114,8 +114,8 @@
                     psAdd.perfectScrollbar();
                 },
                 replaceWrapperScrollBar: function() {
-                    if (!oDoc.helper.common.isMobileBrowser())
-                        $('div.main-panel')
+                    //if (!oDoc.helper.common.isMobileBrowser())
+                    $('div.main-panel')
                         .css('overflow', 'hidden !important')
                         .perfectScrollbar();
                 }
@@ -169,13 +169,13 @@
                                 if (_o_.compare.isString(val)) {
                                     var arrName = key.split('.');
                                     var title = _o_.array.removeLast(arrName, 0).join('');
-                                    var extension = _o_.array.takeLast(arrName).join('');
+                                    var ext = _o_.array.takeLast(arrName).join('');
 
                                     sMenu += _o_.string.format(
                                         '<li><a href="{1}" data-extension="{3}"><p>{2}</p></a></li>',
-                                        _o_.string.concat('#', val),
+                                        _o_.string.format('#{1}#{2}#{3}', val, ext, _o_.string.toLower(title)),
                                         title,
-                                        extension
+                                        ext
                                     );
 
                                 } else {
@@ -252,45 +252,58 @@
                         oDoc.events.sideMenu.items.apply();
                         oDoc.events.sideMenu.toggler.apply();
                         oDoc.events.document.register.apply();
+
+                        oDoc.helper.document.initPage.apply();
                     });
                 }
             },
             sideMenu: {
                 items: function() {
-                    $('.sidebar ul.nav a').on('click', function() {
-                        var that = $(this);
+                    oDoc.helper.common.jquery.unbindBind(
+                        $('.sidebar ul.nav a'),
+                        'click',
+                        function() {
+                            var that = $(this);
+                            var isParent = that.data('toggle') !== undefined;
+                            var url = _o_.string.removeLeft(that.attr('href'), 1);
 
-                        var isParent = that.data('toggle') !== undefined;
-                        if (!isParent) {
-                            Pace.restart();
+                            if (!isParent) {
+                                Pace.restart();
 
-                            let url = _o_.string.removeLeft(that.attr('href'), 1);
-                            oDoc.helper.common.setHash(url);
+                                oDoc.ui.sidebar.highlightActive(that);
+                                oDoc.helper.common.setHash(url);
 
-                            _o_.ajax.get({
-                                url: url,
-                                success: function(xhr) {
-                                    if (!xhr.responseText)
-                                        return;
+                                _o_.ajax.get({
+                                    url: url,
+                                    success: function(xhr) {
+                                        if (!xhr.responseText)
+                                            return;
 
-                                    xhr = JSON.parse(xhr.responseText);
+                                        xhr = JSON.parse(xhr.responseText);
 
-                                    oDoc.ui.document.update({
-                                        title: that.text(),
-                                        extension: that.data('extension'),
-                                        content: xhr.content
-                                    });
-                                }
-                            });
+                                        oDoc.ui.document.update({
+                                            title: that.text(),
+                                            extension: that.data('extension'),
+                                            content: xhr.content
+                                        });
+                                    }
+                                });
 
-                            oDoc.ui.sidebar.highlightActive(that);
+                                return false;
 
-                            return false;
+                            } else {
+                                var expanded = that.attr('aria-expanded');
+                                var watch = setInterval(function() {
+                                    if (expanded !== that.attr('aria-expanded')) {
+                                        $('#sidebar-wrap').perfectScrollbar('update');
 
-                        } else {
-                            $('#sidebar-wrap').perfectScrollbar('update');
+                                        console.log('done');
+                                        clearInterval(watch);
+                                    }
+                                }, 10);
+                            }
                         }
-                    });
+                    );
                 },
                 toggler: function() {
                     $('button.navbar-toggle').on('click', function() {
@@ -315,17 +328,21 @@
                         oDoc.events.document.links.click.apply();
                     },
                     click: function() {
-                        $('div.main-panel a[href]')
-                            .off('click')
-                            .on('click', function(e) {
+                        oDoc.helper.common.jquery.unbindBind(
+                            $('div.main-panel a[href]'),
+                            'click',
+                            function(e) {
                                 e.preventDefault();
 
-                                var that = $(this);
-                                var href = that.attr('href');
+                                let that = $(this);
+                                let href = that.attr('href');
 
                                 // handle anchored link
                                 if (_o_.string.isStartsWith(href, '#')) {
-                                    oDoc.helper.common.setHash(href, false);
+                                    oDoc.helper.common.scrollToHash(href, function() {
+                                        $('div.main-panel').perfectScrollbar('update');
+                                    });
+
                                     return false;
                                 }
 
@@ -344,7 +361,8 @@
 
                                     return false;
                                 }
-                            });
+                            }
+                        );
                     }
                 }
             }
@@ -357,7 +375,7 @@
                 },
                 getHashes: function(outAsArray) {
                     outAsArray = _o_.utility.ifNull(outAsArray, false);
-                    return !outAsArray ? w.location.hash.substr(1).split('#') : w.location.hash;
+                    return outAsArray ? w.location.hash.substr(1).split('#') : w.location.hash;
                 },
                 setHash: function(newHash, removeOld) {
                     removeOld = _o_.utility.ifNull(removeOld, true);
@@ -365,8 +383,20 @@
                     if (removeOld)
                         w.location.hash = newHash;
 
-                    else
-                        w.location.hash = _o_.string.format('{1}#{2}', oDoc.helper.common.getHashes(), newHash);
+                    else {
+                        if (!_o_.string.isContain(w.location.hash, newHash))
+                            w.location.hash = _o_.string.format('{1}{2}', oDoc.helper.common.getHashes(), newHash);
+                    }
+                },
+                scrollToHash: function(hash, cb) {
+                    var oldHashes = oDoc.helper.common.getHashes(false);
+
+                    if ($(hash).length > 0) {
+                        location.hash = hash;
+                        oDoc.helper.common.setHash(_o_.string.concat(oldHashes, hash));
+
+                        if (cb) cb();
+                    }
                 },
                 encoding: {
                     stringToBase64: function(str) {
@@ -405,6 +435,11 @@
                         return true;
                     else
                         return false;
+                },
+                jquery: {
+                    unbindBind: function(dom, eventName, fn) {
+                        $(dom).off(eventName).on(eventName, fn);
+                    }
                 },
                 github: {
                     fetchMenuFromRepo: function() {
@@ -511,6 +546,51 @@
                     });
 
                     return result;
+                }
+            },
+            document: {
+                initPage: function() {
+                    var hashes = oDoc.helper.common.getHashes(true);
+
+                    // hotlink
+                    if (_o_.compare.isArray(hashes) && hashes.length > 2)
+                        _o_.ajax.get({
+                            url: hashes[0],
+                            success: function(xhr) {
+                                if (!xhr.responseText)
+                                    return;
+
+                                xhr = JSON.parse(xhr.responseText);
+
+                                oDoc.ui.document.update({
+                                    title: hashes[2],
+                                    extension: hashes[1],
+                                    content: xhr.content
+                                });
+
+                                if (hashes.length > 3) {
+                                    console.log(_o_.string.concat('#', hashes[3]));
+                                    oDoc.helper.common.scrollToHash(_o_.string.concat('#', hashes[3]));
+                                }
+                            }
+                        });
+
+                    else
+                        _o_.ajax.get({
+                            url: s.application.additionalData.initialPage.url,
+                            success: function(xhr) {
+                                if (!xhr.responseText)
+                                    return;
+
+                                xhr = JSON.parse(xhr.responseText);
+
+                                oDoc.ui.document.update({
+                                    title: s.application.additionalData.initialPage.renderAs.title,
+                                    extension: s.application.additionalData.initialPage.renderAs,
+                                    content: xhr.content
+                                });
+                            }
+                        });
                 }
             }
         }

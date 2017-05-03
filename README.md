@@ -33,10 +33,10 @@ As a simple explanation, **`octapush.docs`** is a file explorer (and viewer) for
 ----
 
 # How To Use
-To use **`octapush.docs`**, you only need to follow 3 easy steps like the following:
+To use **`octapush.docs`**, you only need to follow 4 easy steps like the following:
 1. Download the full package of **`octapush.docs`** from GitHub: [https://github.com/octapush/octapush.docs]().
-2. Create your documentation files (it is recommended to use the file [_MARKDOWN_](https://en.wikipedia.org/wiki/Markdown) with extension MD) and place the files on [GitHub](https://github.com).
-3. Extract and configure the **index.html** and **configs.js** files as per your requirements.
+2. Extract and configure the **index.html** and **configs.js** files as per your requirements.
+3. Create your documentation files (it is recommended to use the file [_MARKDOWN_](https://en.wikipedia.org/wiki/Markdown) with extension MD) and place the files on [GitHub](https://github.com).
 4. Upload the files on the web server.
 
 And then FINISH. 
@@ -72,7 +72,7 @@ We will fix all of the issues and/or bugs as soon as possible.
 ----
 
 # Fork And Download
-You can freely fork or [download **`octapush.docs`**](https://github.com/octapush/octapush.docs) with certain [licenses you can see here](https://github.com/octapush/octapush.docs/blob/master/LICENSE).
+You can freely [fork or download **`octapush.docs`**](https://github.com/octapush/octapush.docs) with certain [license.](https://github.com/octapush/octapush.docs/blob/master/LICENSE).
 
 ----
 

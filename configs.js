@@ -34,30 +34,28 @@
     'use strict';
 
     let configurations = {
-        title: 'octaDoc',
+        title: 'octapush.docs',
         githubData: {
             owner: 'octapush',
             project: 'octapush.docs',
             branch: 'master',
             docDirectory: 'docs-data'
         },
-        embedDocTitle: true,
-        openExternalLinkOnNewTab: true,
         behaviour: {
+            common: {
+                docTitleType: 'combine', // "app" | "page" | "combine"
+                docTitleCombineSeparator: '-',
+                openExternalLinkOnNewTab: true
+            },
             page: {
                 convertUrlIntoAnchor: true,
-                initialPage: {
-                    useFirstMenuItem: true,
-                    customInitialPage: {
-                        title: 'home',
-                        directoryPath: 'https://api.github.com/repos/octapush/octapush.docs/git/blobs/9087473574e115a76a1d313cf59126ba0891da10'
-                    }
-                }
+                supportImageFile: true,
+                supportMarkupFile: true
             },
             sideMenu: {
                 textCase: 'capitalize',
-                background: 'brown',
-                color: 'danger',
+                background: 'brown', // "white" | "brown"
+                color: 'danger', // "primary" | "info" | "success" | "warning" | "danger"
 
                 showMdFilesOnly: true,
                 hideEmptyDirectory: true,
@@ -76,12 +74,12 @@
                     url: 'http://fadhly.hol.es'
                 },
                 {
-                    title: 'License',
-                    url: 'https://github.com/octapush/octapush.docs/blob/master/LICENSE'
+                    title: 'octapush Projects',
+                    url: 'https://github.com/octapush'
                 },
                 {
                     title: 'Download',
-                    url: 'links3.md'
+                    url: 'https://github.com/octapush/octapush.docs/'
                 }
             ]
         },

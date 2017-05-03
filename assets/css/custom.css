@@ -332,7 +332,7 @@ to make scrollbars always visible
     opacity: 0.6;
 }
 
-.ps-scrollbar-y-rail,
-.ps-scrollbar-x-rail {
+.ps__scrollbar-y-rail,
+.ps__scrollbar-x-rail {
     z-index: 999
 }

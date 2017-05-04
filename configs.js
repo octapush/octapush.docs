@@ -48,9 +48,14 @@
                 openExternalLinkOnNewTab: true
             },
             page: {
-                convertUrlIntoAnchor: true,
+                pathOfInitialPage: 'hidden directory/file 1.md',
                 supportImageFile: true,
-                supportMarkupFile: true
+                supportMarkupFile: true,
+                markdown: {
+                    encodeUrls: true,
+                    encodeEmails: true,
+                    headerLevelStart: 1, // 1 = <h1> || 2 = <h2> || ... and so on.
+                }
             },
             sideMenu: {
                 textCase: 'capitalize',

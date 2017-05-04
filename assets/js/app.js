@@ -28,7 +28,7 @@
 
     s = Object.assign(s, {
         execScript: true,
-        useDummyData: true,
+        useDummyData: false,
         animationSpeed: 250,
         octapushJS: {
             pluginUrl: 'https://cdn.rawgit.com/octapush/octapushJS/418319e3/plugins/',
@@ -54,8 +54,9 @@
                     octaDoc.ui.sideMenu.appearances.color.apply();
 
                 } else if (_o_.string.isEqual(regType, 'ready', false)) {
-                    octaDoc.ui.sideMenu.register.apply();
-                    octaDoc.events.sideMenu.hamburger.click.apply();
+                    octaDoc.ui.sideMenu.register(function() {
+                        octaDoc.ui.page.init.apply();
+                    });
                 }
             },
             document: {
@@ -83,11 +84,14 @@
                 }
             },
             sideMenu: {
-                register: function() {
+                register: function(cb) {
                     octaDoc.ui.sideMenu.title.apply();
 
                     octaDoc.ui.sideMenu.build.init(function() {
                         octaDoc.ui.sideMenu.appearances.case.apply();
+                        octaDoc.events.sideMenu.hamburger.click.apply();
+
+                        if (cb) cb();
                     });
                 },
                 title: function() {
@@ -132,7 +136,6 @@
                         octaDoc.ui.sideMenu.build.fetchItems(function(data) {
                             $('.sidebar ul.nav').html(data);
                             octaDoc.events.sideMenu.menuItem.register.apply();
-                            // TODO: LANJUT DISINI
 
                             if (cb) cb(data);
                         });
@@ -200,6 +203,26 @@
                 }
             },
             page: {
+                init: function() {
+                    var hashes = octaDoc.helper.utility.hash.get(true);
+                    var path = '';
+
+                    if (_o_.compare.isArray(hashes) && hashes.length > 0) {
+
+                    } else {
+                        path = s.behaviour.page.pathOfInitialPage;
+                        octaDoc.helper.github.readFile(
+                            octaDoc.helper.dataParser.sideMenu.getUrlByPath(path),
+                            function(xhr) {
+                                octaDoc.ui.page.update({
+                                    title: s.title,
+                                    extension: octaDoc.helper.dataParser.sideMenu.getExtensionFromPath(path),
+                                    content: xhr
+                                });
+                            }
+                        );
+                    }
+                },
                 update: function(data) {
                     if (s.behaviour.common.docTitleType)
                         octaDoc.ui.document.title(data.title);
@@ -223,7 +246,11 @@
                         if (_o_.string.isEqual(_o_.string.toLower(data.extension), 'md')) {
                             $('div#document-wrapper').html(
                                 (new showdown.Converter({
-                                    simplifiedAutoLink: s.behaviour.page.convertUrlIntoAnchor,
+                                    openLinksInNewWindow: s.behaviour.common.openExternalLinkOnNewTab,
+
+                                    simplifiedAutoLink: s.behaviour.page.markdown.encodeUrls,
+                                    encodeEmails: s.behaviour.page.markdown.encodeEmails,
+
                                     ghCompatibleHeaderId: true,
                                     tables: true
                                 })).makeHtml(data.content)
@@ -248,7 +275,12 @@
                         octaDoc.events.page.anchors.click.apply();
                     }
 
-                    $('div.main-panel').scrollTop(0);
+                    if (!data.scrollArea)
+                        $('div.main-panel').scrollTop(0);
+                    else {
+                        alert('DO SOMETHING HERE.')
+                    }
+
                     octaDoc.ui.plugins.perfectScrollbar.update('div.main-panel');
                 },
                 footer: function(data) {
@@ -446,7 +478,7 @@
                                     return false;
                                 }
 
-                                // handle outside domain url
+                                // handle unknown url
                                 else {
                                     let win = w.open(href);
                                     if (win)
@@ -497,7 +529,7 @@
                             w.location.toString().replace(w.location.hash, '');
                     },
                     get: function(outAsArray) {
-                        return !_o_.utility.ifNull(withHash, false) ?
+                        return !_o_.utility.ifNull(outAsArray, false) ?
                             w.location.hash.substr(1).split('#') :
                             w.location.hash;
                     },
@@ -516,8 +548,9 @@
                     scroll: function(hash, cb) {
                         // if the DOM is available
                         if ($(hash).length > 0) {
+                            var newHash = _o_.string.concat(octaDoc.helper.utility.hash.get(false), hash);
                             location.hash = hash;
-                            octaDoc.helper.utility.hash.set(_o_.string.concat(octaDoc.helper.utility.hash.get(false), hash));
+                            octaDoc.helper.utility.hash.set(newHash, true);
 
                             if (cb) cb();
                         }
@@ -701,8 +734,7 @@
                         return _o_.array.takeLast(arrPath).join('');
                     }
                 }
-            },
-            dom: {}
+            }
         }
     };
 

@@ -10,6 +10,10 @@
     text-transform: lowercase !important;
 }
 
+.as-is {
+    text-transform: none !important;
+}
+
 .sidebar .nav>.copyright {
     position: absolute;
     width: 100%;

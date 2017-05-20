@@ -19,6 +19,9 @@
  * This file is a part of octapush.docs (https://github.com/octapush/octapush.docs).
  * And This file will be used as configuration data of octapush.docs.
  * 
+ * See configurations sections from octapush.docs documentation page for detail
+ * informations about configuring this file.
+ * 
  * =================================================================================
  * INFO:
  * 
@@ -51,7 +54,9 @@
                 scrollSpeed: 1000 // in millisecond
             },
             page: {
-                pathOfInitialPage: 'hidden directory/file 1.md',
+                // "pathOfInitialPage" setting will be ignored when user open the documentation
+                // using hardlink (this is for bookmark support purposes).
+                pathOfInitialPage: 'first-menu-item', // "first-menu-item" || your file path,
                 
                 supportImageFile: true,
                 supportMarkupFile: true,
@@ -62,21 +67,19 @@
                 }
             },
             sideMenu: {
-                textCase: 'capitalize', // "capitalize" | "uppercase" | "lowercase"
+                textCase: 'as-is', // "as-is" | "capitalize" | "uppercase" | "lowercase"
                 background: 'brown', // "white" | "brown"
                 color: 'danger', // "primary" | "info" | "success" | "warning" | "danger"
+
+                useNumberOnFileNameToSort: true,
 
                 showMdFilesOnly: true,
                 hideEmptyDirectory: true,
 
-                useNumberOnFileNameToSort: true,
-                AscendingSort: true,
-
                 hideFilesOrDirectory: [
                     'Hidden Directory',
 
-                    'editing documents/hidden file.MD',
-                    'license.md',
+                    '05.documenting/05.hidden file.MD',
                 ],
                 before: [],
                 after: []

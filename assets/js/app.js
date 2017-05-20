@@ -29,7 +29,6 @@
     s = Object.assign(s, {
         execScript: true,
         useDummyData: false,
-        animationSpeed: 500,
         octapushJS: {
             pluginUrl: 'https://cdn.rawgit.com/octapush/octapushJS/418319e3/plugins/',
             loadPlugin: ['array']
@@ -175,13 +174,12 @@
                         _o_.utility.each(data, function(key, val) {
                             if (_o_.compare.isString(val)) {
                                 var arrName = key.split('.');
-                                var title = _o_.array.removeLast(arrName, 0).join('');
 
-                                sMenu += _o_.string.format(
-                                    '<li><a href="#{1}"><p>{2}</p></a></li>',
-                                    _o_.string.toLower(val),
-                                    title
-                                );
+                                if (s.behaviour.sideMenu.useNumberOnFileNameToSort === true)
+                                    arrName = _o_.array.removeFirst(arrName, 1);
+
+                                var title = _o_.array.removeLast(arrName, 0).join('');
+                                sMenu += _o_.string.format('<li><a href="#{1}"><p>{2}</p></a></li>', val, title);
 
                             } else {
                                 var sTemp = _o_.string.concat(
@@ -192,7 +190,10 @@
                                     '</li>'
                                 );
 
-                                sMenu += _o_.string.format(sTemp, key, _o_.string.dasherize(key));
+                                if (s.behaviour.sideMenu.useNumberOnFileNameToSort === true)
+                                    key = _o_.array.removeFirst(key.split('.'), 1).join('');
+
+                                sMenu += _o_.string.format(sTemp, key, key);
                             }
                         });
 
@@ -207,6 +208,7 @@
                     var hashes = octaDoc.helper.utility.hash.get(true);
                     var path = '';
 
+                    // init from hardlink
                     if (_o_.compare.isArray(hashes) && !_o_.string.isEqual(hashes[0], '')) {
                         path = _o_.array.takeFirst(hashes, 1)[0];
                         var extension = octaDoc.helper.dataParser.sideMenu.getExtensionFromPath(path);
@@ -225,16 +227,23 @@
 
                     } else {
                         path = s.behaviour.page.pathOfInitialPage;
-                        octaDoc.helper.github.readFile(
-                            octaDoc.helper.dataParser.sideMenu.getUrlByPath(path),
-                            function(xhr) {
-                                octaDoc.ui.page.update({
-                                    title: s.title,
-                                    extension: octaDoc.helper.dataParser.sideMenu.getExtensionFromPath(path),
-                                    content: xhr
-                                });
-                            }
-                        );
+
+                        if (_o_.string.isEqual(path, 'first-menu-item', false)) {
+                            path = $('ul.nav li:first a:first').attr('href').substr(1);
+                            $('ul.nav li:first a:first').trigger('click');
+
+                        } else {
+                            octaDoc.helper.github.readFile(
+                                octaDoc.helper.dataParser.sideMenu.getUrlByPath(path),
+                                function(xhr) {
+                                    octaDoc.ui.page.update({
+                                        title: s.title,
+                                        extension: octaDoc.helper.dataParser.sideMenu.getExtensionFromPath(path),
+                                        content: xhr
+                                    });
+                                }
+                            );
+                        }
                     }
 
                     octaDoc.ui.sideMenu.setHighlight($(_o_.string.format('ul.nav a[href="#{1}"]', path)));
@@ -418,7 +427,7 @@
                                         octaDoc.helper.dataParser.sideMenu.getUrlByPath(url),
                                         function(xhr) {
                                             octaDoc.ui.page.update({
-                                                title: that.text(),
+                                                title: octaDoc.helper.dataParser.sideMenu.getFileTitle(url),
                                                 extension: octaDoc.helper.dataParser.sideMenu.getExtensionFromPath(url),
                                                 content: xhr
                                             });
@@ -779,9 +788,26 @@
                     },
                     getFileTitle: function(path) {
                         path = _o_.array.takeLast(path.split('/'), 1).toString();
-                        path = _o_.array.removeLast(path.split('.')).toString();
 
-                        return _o_.string.capitalize(path, true);
+                        var arr = path.split('.');
+                        arr = _o_.array.removeLast(arr);
+
+                        if (s.behaviour.sideMenu.useNumberOnFileNameToSort === true)
+                            arr = _o_.array.removeFirst(arr, 1);
+
+                        path = arr.join('.');
+
+                        var caseType = s.behaviour.common.applicationTitleCase;
+                        if (_o_.string.isEqual(caseType, 'uppercase', false))
+                            path = _o_.string.toUpper(path);
+
+                        else if (_o_.string.isEqual(caseType, 'lowercase', false))
+                            path = _o_.string.toLower(path);
+
+                        else if (_o_.string.isEqual(caseType, 'capitalize', false))
+                            path = _o_.string.capitalize(path, true);
+
+                        return path;
                     }
                 }
             }

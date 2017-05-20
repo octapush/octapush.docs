@@ -1,5 +1,5 @@
 /*
- * octapush.docs / configs.js
+ * octapush.docs / app.js
  * =================================================================================
  * 
  * Get the latest version of octapush.docs from:
@@ -29,7 +29,7 @@
     s = Object.assign(s, {
         execScript: true,
         useDummyData: false,
-        animationSpeed: 250,
+        animationSpeed: 500,
         octapushJS: {
             pluginUrl: 'https://cdn.rawgit.com/octapush/octapushJS/418319e3/plugins/',
             loadPlugin: ['array']
@@ -61,6 +61,7 @@
             },
             document: {
                 register: function() {
+                    octaDoc.helper.dataParser.appTitleCase.apply();
                     octaDoc.ui.document.title.apply();
                     octaDoc.ui.document.initScrollbar.apply();
                     octaDoc.ui.page.footer.apply();
@@ -143,7 +144,6 @@
                     fetchItems: function(cb) {
                         if (!s.useDummyData)
                             octaDoc.helper.github.getFilesAndDirFromDocDir(function(data) {
-                                // save XHR.tree for next purposes
                                 s.githubDataBuffer = data;
 
                                 data = octaDoc.helper.dataParser.sideMenu.menuDataBuilder(data.tree);
@@ -184,17 +184,15 @@
                                 );
 
                             } else {
-                                var sTemp = '<li><a data-toggle="collapse" href="#{2}" aria-expanded="false"><p>{1}<b class="caret"></b></p></a>'
-                                sTemp += '<div class="collapse" id="{2}" aria-expanded="false"><ul class="nav">';
-                                sTemp += octaDoc.ui.sideMenu.build.constructDom(val);
-                                sTemp += '</ul></div>';
-                                sTemp += '</li>';
-
-                                sMenu += _o_.string.format(
-                                    sTemp,
-                                    key,
-                                    _o_.string.dasherize(key)
+                                var sTemp = _o_.string.concat(
+                                    '<li><a data-toggle="collapse" href="#{2}" aria-expanded="false"><p>{1}<b class="caret"></b></p></a>',
+                                    '<div class="collapse" id="{2}" aria-expanded="false"><ul class="nav">',
+                                    octaDoc.ui.sideMenu.build.constructDom(val),
+                                    '</ul></div>',
+                                    '</li>'
                                 );
+
+                                sMenu += _o_.string.format(sTemp, key, _o_.string.dasherize(key));
                             }
                         });
 
@@ -203,11 +201,27 @@
                 }
             },
             page: {
+                // TODO: 
+                // HIGHLIGHT THE SIDE MENU AFTER DOCUMENT LOADED
                 init: function() {
                     var hashes = octaDoc.helper.utility.hash.get(true);
                     var path = '';
 
-                    if (_o_.compare.isArray(hashes) && hashes.length > 0) {
+                    if (_o_.compare.isArray(hashes) && !_o_.string.isEqual(hashes[0], '')) {
+                        path = _o_.array.takeFirst(hashes, 1)[0];
+                        var extension = octaDoc.helper.dataParser.sideMenu.getExtensionFromPath(path);
+                        var title = octaDoc.helper.dataParser.sideMenu.getFileTitle(path);
+
+                        octaDoc.helper.github.readFile(
+                            octaDoc.helper.dataParser.sideMenu.getUrlByPath(path),
+                            function(xhr) {
+                                octaDoc.ui.page.update({
+                                    title: title,
+                                    extension: extension,
+                                    content: xhr
+                                });
+                            }
+                        );
 
                     } else {
                         path = s.behaviour.page.pathOfInitialPage;
@@ -222,6 +236,8 @@
                             }
                         );
                     }
+
+                    octaDoc.ui.sideMenu.setHighlight($(_o_.string.format('ul.nav a[href="#{1}"]', path)));
                 },
                 update: function(data) {
                     if (s.behaviour.common.docTitleType)
@@ -275,10 +291,14 @@
                         octaDoc.events.page.anchors.click.apply();
                     }
 
-                    if (!data.scrollArea)
+                    var hashes = octaDoc.helper.utility.hash.get(true);
+
+                    if (hashes.length < 2) {
                         $('div.main-panel').scrollTop(0);
-                    else {
-                        alert('DO SOMETHING HERE.')
+
+                    } else {
+                        hashes = _o_.array.takeLast(hashes, 1)[0];
+                        octaDoc.helper.utility.hash.scroll(_o_.string.concat('#', hashes));
                     }
 
                     octaDoc.ui.plugins.perfectScrollbar.update('div.main-panel');
@@ -287,6 +307,7 @@
                     var sFoot = '';
 
                     _o_.utility.each(s.behaviour.footerLinks, function(key, val) {
+                        // TODO: remove target, the "a" event already handled by page.
                         val.target = s.behaviour.common.openExternalLinkOnNewTab ? 'target="_blank"' : ' ';
                         sFoot += _o_.string.template('<li><a href="{{url}}"{{target}}>{{title}}</a></li>', val);
                     });
@@ -529,30 +550,38 @@
                             w.location.toString().replace(w.location.hash, '');
                     },
                     get: function(outAsArray) {
-                        return !_o_.utility.ifNull(outAsArray, false) ?
+                        return _o_.utility.ifNull(outAsArray, true) ?
                             w.location.hash.substr(1).split('#') :
                             w.location.hash;
                     },
                     set: function(newHash, removeOld) {
+                        removeOld = _o_.utility.ifNull(removeOld, true);
+
                         if (!_o_.string.isStartsWith(newHash, '#'))
                             newHash = _o_.string.concat('#', newHash);
 
-                        if (_o_.utility.ifNull(removeOld, true)) {
+                        if (removeOld) {
                             w.location.hash = newHash
 
                         } else {
-                            if (_o_.string.isContain(w.location.hash, newHash))
+                            if (w.location.hash.toString().indexOf(newHash) === -1)
                                 w.location.hash = _o_.string.format('{1}{2}', octaDoc.helper.utility.hash.get(), newHash);
                         }
                     },
                     scroll: function(hash, cb) {
                         // if the DOM is available
                         if ($(hash).length > 0) {
-                            var newHash = _o_.string.concat(octaDoc.helper.utility.hash.get(false), hash);
-                            location.hash = hash;
-                            octaDoc.helper.utility.hash.set(newHash, true);
-
-                            if (cb) cb();
+                            $('div.main-panel')
+                                .scrollTop(0)
+                                .stop()
+                                .animate({
+                                        scrollTop: $(hash).offset().top
+                                    },
+                                    s.behaviour.common.scrollSpeed,
+                                    function() {
+                                        octaDoc.helper.utility.hash.set(hash, false);
+                                        if (cb) cb();
+                                    });
                         }
                     }
                 },
@@ -641,6 +670,21 @@
                             return true;
 
                     return false;
+                },
+                appTitleCase: function() {
+                    var caseType = s.behaviour.common.applicationTitleCase;
+
+                    if (_o_.string.isEqual(caseType, 'as-is', false))
+                        return;
+
+                    if (_o_.string.isEqual(caseType, 'uppercase', false))
+                        s.title = _o_.string.toUpper(s.title);
+
+                    else if (_o_.string.isEqual(caseType, 'lowercase', false))
+                        s.title = _o_.string.toLower(s.title);
+
+                    else if (_o_.string.isEqual(caseType, 'capitalize', false))
+                        s.title = _o_.string.capitalize(s.title, true);
                 },
                 sideMenu: {
                     filter: function(data) {
@@ -732,6 +776,12 @@
                     getExtensionFromPath: function(path) {
                         var arrPath = path.split('.');
                         return _o_.array.takeLast(arrPath).join('');
+                    },
+                    getFileTitle: function(path) {
+                        path = _o_.array.takeLast(path.split('/'), 1).toString();
+                        path = _o_.array.removeLast(path.split('.')).toString();
+
+                        return _o_.string.capitalize(path, true);
                     }
                 }
             }

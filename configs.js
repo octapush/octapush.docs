@@ -43,27 +43,34 @@
         },
         behaviour: {
             common: {
+                applicationTitleCase: 'as-is', // "as-is" | "uppercase" | "lowercase" | "capitalize"
+
                 docTitleType: 'combine', // "app" | "page" | "combine"
                 docTitleCombineSeparator: '-',
-                openExternalLinkOnNewTab: true
+                openExternalLinkOnNewTab: true,
+                scrollSpeed: 1000 // in millisecond
             },
             page: {
                 pathOfInitialPage: 'hidden directory/file 1.md',
+                
                 supportImageFile: true,
                 supportMarkupFile: true,
                 markdown: {
                     encodeUrls: true,
                     encodeEmails: true,
-                    headerLevelStart: 1, // 1 = <h1> || 2 = <h2> || ... and so on.
+                    headerLevelStart: 1, // 1 = <h1> | 2 = <h2> | ... and so on.
                 }
             },
             sideMenu: {
-                textCase: 'capitalize',
+                textCase: 'capitalize', // "capitalize" | "uppercase" | "lowercase"
                 background: 'brown', // "white" | "brown"
                 color: 'danger', // "primary" | "info" | "success" | "warning" | "danger"
 
                 showMdFilesOnly: true,
                 hideEmptyDirectory: true,
+
+                useNumberOnFileNameToSort: true,
+                AscendingSort: true,
 
                 hideFilesOrDirectory: [
                     'Hidden Directory',

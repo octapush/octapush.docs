@@ -497,7 +497,8 @@
                                 // or documentation link page
                                 else if (_o_.string.isStartsWith(href, '#')) {
                                     if (_o_.string.isContain(href, '/')) {
-                                        alert('DO LOAD PAGE PROGRESS HERE.');
+                                        let nHref = href.substr(2);
+                                        alert('loading ' + nHref);
 
                                     } else {
                                         octaDoc.helper.utility.hash.scroll(href, function() {

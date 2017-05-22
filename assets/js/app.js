@@ -66,7 +66,7 @@
                     octaDoc.ui.page.footer.apply();
                 },
                 title: function(docTitle) {
-                    var title = s.title;
+                    let title = s.title;
 
                     if (_o_.string.isEqual(s.behaviour.common.docTitleType, 'page', false) && !_o_.compare.isNullOrEmpty(docTitle))
                         title = _o_.utility.ifNull(docTitle, s.title);
@@ -498,7 +498,27 @@
                                 else if (_o_.string.isStartsWith(href, '#')) {
                                     if (_o_.string.isContain(href, '/')) {
                                         let nHref = href.substr(2);
-                                        alert('loading ' + nHref);
+                                        var url = octaDoc.helper.dataParser.sideMenu.getUrlByPath(nHref);
+
+                                        if (!url) {
+                                            alert('Invalid Url.');
+                                            return;
+                                        }
+
+                                        Pace.restart();
+                                        octaDoc.ui.sideMenu.setHighlight($(_o_.string.format('ul.nav li a[href="#{1}"]', nHref)));
+                                        octaDoc.helper.utility.hash.set(nHref);
+
+                                        octaDoc.helper.github.readFile(
+                                            url,
+                                            function(xhr) {
+                                                octaDoc.ui.page.update({
+                                                    title: octaDoc.helper.dataParser.sideMenu.getFileTitle(url),
+                                                    extension: octaDoc.helper.dataParser.sideMenu.getExtensionFromPath(nHref),
+                                                    content: xhr
+                                                });
+                                            }
+                                        )
 
                                     } else {
                                         octaDoc.helper.utility.hash.scroll(href, function() {

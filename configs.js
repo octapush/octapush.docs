@@ -40,9 +40,9 @@
         title: 'octapush.docs',
         githubData: {
             owner: 'octapush',
-            project: 'octapush.docs',
+            project: 'documentations',
             branch: 'master',
-            docDirectory: 'docs-data'
+            docDirectory: 'octapush.docs'
         },
         behaviour: {
             common: {
@@ -60,10 +60,12 @@
                 
                 supportImageFile: true,
                 supportMarkupFile: true,
+
                 markdown: {
                     encodeUrls: true,
                     encodeEmails: true,
                     headerLevelStart: 1, // 1 = <h1> | 2 = <h2> | ... and so on.
+                    stripTable: true
                 }
             },
             sideMenu: {
@@ -77,9 +79,9 @@
                 hideEmptyDirectory: true,
 
                 hideFilesOrDirectory: [
-                    'Hidden Directory',
+                    '00.ASSETS', // <<- SAMPLE FOR DIRECTORY
 
-                    '05.documenting/05.hidden file.MD',
+                    '05.documenting/05.hidden file.MD', // <-- SAMPLE FOR FILE
                 ],
                 before: [],
                 after: []

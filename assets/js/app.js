@@ -34,6 +34,7 @@
             loadPlugin: ['array']
         },
         specialMime: {
+            markdown: ['markdown', 'mdown', 'mkdn', 'md', 'mkd', 'mdwn', 'mdtxt', 'mdtext', 'text'],
             images: ['jpg', 'jpeg', 'gif', 'png', 'bmp'],
             markup: ['htm', 'html', 'xhtml']
         },
@@ -193,7 +194,7 @@
                                 if (s.behaviour.sideMenu.useNumberOnFileNameToSort === true)
                                     key = _o_.array.removeFirst(key.split('.'), 1).join('');
 
-                                sMenu += _o_.string.format(sTemp, key, key);
+                                sMenu += _o_.string.format(sTemp, key, _o_.string.dasherize(key));
                             }
                         });
 
@@ -202,8 +203,6 @@
                 }
             },
             page: {
-                // TODO: 
-                // HIGHLIGHT THE SIDE MENU AFTER DOCUMENT LOADED
                 init: function() {
                     var hashes = octaDoc.helper.utility.hash.get(true);
                     var path = '';
@@ -268,7 +267,7 @@
                         data.content = octaDoc.helper.utility.base64.decode(data.content);
 
                         // handle as MD file
-                        if (_o_.string.isEqual(_o_.string.toLower(data.extension), 'md')) {
+                        if (s.specialMime.markdown.indexOf(data.extension) !== -1) {
                             $('div#document-wrapper').html(
                                 (new showdown.Converter({
                                     openLinksInNewWindow: s.behaviour.common.openExternalLinkOnNewTab,
@@ -296,6 +295,7 @@
                             ));
                         }
 
+                        octaDoc.ui.page.wrapComponents.apply();
                         octaDoc.ui.plugins.hljs.reInit.apply();
                         octaDoc.events.page.anchors.click.apply();
                     }
@@ -311,6 +311,23 @@
                     }
 
                     octaDoc.ui.plugins.perfectScrollbar.update('div.main-panel');
+                },
+                wrapComponents: function() {
+                    // table
+                    $('div#document-wrapper.content table')
+                        .addClass(
+                            _o_.string.format(
+                                'table {1}',
+                                s.behaviour.page.markdown.stripTable === true ? 'table-striped' : ''
+                            )
+                        )
+                        .wrap('<div class="content table-responsive table-full-width"></div>');
+
+                    // img
+                    $('div#document-wrapper.content img')
+                        .addClass('center-block')
+                        .css('max-width', '100%')
+                        .wrap('<div class="content block"></div>');
                 },
                 footer: function(data) {
                     var sFoot = '';
@@ -796,6 +813,9 @@
                         return result;
                     },
                     getUrlByPath: function(path) {
+                        //console.log(path);
+                        path = decodeURI(path);
+
                         var ghData = s.githubDataBuffer.tree.filter(function(i) {
                             if (_o_.string.isEqual(i.path, path, false))
                                 return i;

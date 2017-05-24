@@ -245,17 +245,36 @@
                         }
                     }
 
-                    octaDoc.ui.sideMenu.setHighlight($(_o_.string.format('ul.nav a[href="#{1}"]', path)));
+                    octaDoc.ui.sideMenu.setHighlight($(_o_.string.format('ul.nav a[href="#{1}"]', decodeURI(path))));
                 },
                 update: function(data) {
                     if (s.behaviour.common.docTitleType)
-                        octaDoc.ui.document.title(data.title);
+                        octaDoc.ui.document.title(decodeURI(data.title));
 
                     octaDoc.ui.page.header(data.title);
                     octaDoc.ui.page.content(data);
                 },
                 header: function(data) {
-                    $('a#document-title').text(_o_.string.capitalize(data, true));
+                    data = decodeURI(data);
+
+                    switch (_o_.string.toLower(s.behaviour.page.titleCase)) {
+                        case 'capitalize':
+                            data = _o_.string.capitalize(data, true);
+                            break;
+
+                        case 'uppercase':
+                            data = _o_.string.toUpper(data);
+                            break;
+
+                        case 'lowercase':
+                            data = _o_.string.toLower(data);
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    $('a#document-title').text(data);
                 },
                 content: function(data) {
                     if (s.specialMime.images.indexOf(data.extension) !== -1) {
@@ -721,17 +740,22 @@
                 appTitleCase: function() {
                     var caseType = s.behaviour.common.applicationTitleCase;
 
-                    if (_o_.string.isEqual(caseType, 'as-is', false))
-                        return;
+                    switch (_o_.string.toLower(caseType)) {
+                        case 'uppercase':
+                            s.title = _o_.string.toUpper(s.title);
+                            break;
 
-                    if (_o_.string.isEqual(caseType, 'uppercase', false))
-                        s.title = _o_.string.toUpper(s.title);
+                        case 'lowercase':
+                            s.title = _o_.string.toLower(s.title);
+                            break;
 
-                    else if (_o_.string.isEqual(caseType, 'lowercase', false))
-                        s.title = _o_.string.toLower(s.title);
+                        case 'capitalize':
+                            s.title = _o_.string.capitalize(s.title, true);
+                            break;
 
-                    else if (_o_.string.isEqual(caseType, 'capitalize', false))
-                        s.title = _o_.string.capitalize(s.title, true);
+                        default:
+                            break;
+                    }
                 },
                 sideMenu: {
                     filter: function(data) {

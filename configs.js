@@ -61,6 +61,8 @@
                 supportImageFile: true,
                 supportMarkupFile: true,
 
+                titleCase: 'as-is', // "as-is" | "capitalize" | "uppercase" | "lowercase"
+
                 markdown: {
                     encodeUrls: true,
                     encodeEmails: true,

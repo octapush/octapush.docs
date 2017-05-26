@@ -142,14 +142,24 @@
                         });
                     },
                     fetchItems: function(cb) {
+                        function dataProcessor(data) {
+                            s.githubDataBuffer = data;
+
+                            data = octaDoc.helper.dataParser.sideMenu.menuDataBuilder(data.tree);
+                            data = octaDoc.ui.sideMenu.build.constructDom(data);
+
+                            if (cb) cb(data);
+                        }
+
                         if (!s.useDummyData)
                             octaDoc.helper.github.getFilesAndDirFromDocDir(function(data) {
-                                s.githubDataBuffer = data;
+                                dataProcessor(data);
+                                // s.githubDataBuffer = data;
 
-                                data = octaDoc.helper.dataParser.sideMenu.menuDataBuilder(data.tree);
-                                data = octaDoc.ui.sideMenu.build.constructDom(data);
+                                // data = octaDoc.helper.dataParser.sideMenu.menuDataBuilder(data.tree);
+                                // data = octaDoc.ui.sideMenu.build.constructDom(data);
 
-                                if (cb) cb(data);
+                                // if (cb) cb(data);
                             });
 
                         else {
@@ -159,12 +169,13 @@
                                     if (!xhr.responseText) return;
 
                                     xhr = JSON.parse(xhr.responseText);
-                                    s.githubDataBuffer = xhr;
+                                    // s.githubDataBuffer = xhr;
 
-                                    xhr = octaDoc.helper.dataParser.sideMenu.menuDataBuilder(xhr.tree);
-                                    xhr = octaDoc.ui.sideMenu.build.constructDom(xhr);
+                                    // xhr = octaDoc.helper.dataParser.sideMenu.menuDataBuilder(xhr.tree);
+                                    // xhr = octaDoc.ui.sideMenu.build.constructDom(xhr);
 
-                                    if (cb) cb(xhr);
+                                    // if (cb) cb(xhr);
+                                    dataProcessor(xhr);
                                 }
                             });
                         }

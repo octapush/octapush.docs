@@ -22,13 +22,14 @@ As a simple explanation, **`octapush.docs`** is a file explorer (and viewer) for
 2. **`octapush.docs`** is designed with a simple and beautiful look.
 3. **`octapush.docs`** using a responsive design that supports a wide range of the latest browser technologies both on desktop computers and on mobile browsers technology.
 4. **`octapush.docs`** makes it easy to present your documentation, by updating (create, update, remove) your files from [GitHub](https://github.com), then **`octapush.docs`** will be updated automatically.
-5. Have capability to handle lot file types. Although specially designed to handle [_MARKDOWN_](https://en.wikipedia.org/wiki/Markdown) file, **`octapush.docs`** still supports other files like _HTM, HTML, XHTML, JPG, BMP, GIF, PNG, JS, CSS, C, TXT, and/or other file types_.
-6. Code preview with auto detect language support.
-7. Simple forum for each your document (next feature).
-8. You can host **`octapush.docs`** anywhere you want. But, in the future we will add free hosting and free subdomain (for the detail, see [Next Improvement](#next-improvement) section).
-9. Easy installation. **`octapush.docs`** is designed only by using HTML5 and JavaScript technology to perform dynamic actions. So you do not have to worry about the type of _web-server_, version, or type of _operating-system_ you have. **`octapush.docs`** is only processed on the _client-side_. For the _server-side_, we use features from the [GitHub API](https://api.github.com/).
-10. Easy configuration. **`octapush.docs`** designed with easy and very minimal configuration.
-11. Lightweight, and not needing hosting with big bandwidth.
+5. Collaborative. Of course. Since we have used GitHub to put documentation files, so you can work together with your team to manage the documentations.
+6. Have capability to handle lot file types. Although specially designed to handle [_MARKDOWN_](https://en.wikipedia.org/wiki/Markdown) file, **`octapush.docs`** still supports other files like _HTM, HTML, XHTML, JPG, BMP, GIF, PNG, JS, CSS, C, TXT, and/or other file types_.
+7. Code preview with auto detect language support.
+8. Simple forum for each your document (next feature).
+9. You can host **`octapush.docs`** anywhere you want. But, in the future we will add free hosting and free subdomain (for the detail, see [Next Improvement](#next-improvement) section).
+10. Easy installation. **`octapush.docs`** is designed only by using HTML5 and JavaScript technology to perform dynamic actions. So you do not have to worry about the type of _web-server_, version, or type of _operating-system_ you have. **`octapush.docs`** is only processed on the _client-side_. For the _server-side_, we use features from the [GitHub API](https://api.github.com/).
+11. Easy configuration. **`octapush.docs`** designed with easy and very minimal configuration.
+12. Lightweight, and not needing hosting with big bandwidth.
 
 ----
 
@@ -36,20 +37,20 @@ As a simple explanation, **`octapush.docs`** is a file explorer (and viewer) for
 To use **`octapush.docs`**, you only need to follow 4 easy steps like the following:
 1. Download the full package of **`octapush.docs`** from [download page](https://github.com/octapush/octapush.docs/releases).
 2. Extract and configure the **index.html** and **configs.js** files as per your requirements.
-3. Create your documentation files (it is recommended to use the file [_MARKDOWN_](https://en.wikipedia.org/wiki/Markdown) with extension MD) and place the files on [GitHub](https://github.com).
+3. Create your documentation files (it is recommended to use the [_MARKDOWN_](https://en.wikipedia.org/wiki/Markdown) file with extension MD) and place the files on [GitHub](https://github.com).
 4. Upload extracted files on the web server.
 
 And then FINISH. 
 
 After following four steps above, you can use and access your documentation.
 
-To get details information about how to configuring **`octapush.docs`** you can see it from **Configuration Sections**.
+To get details information about how to configuring **`octapush.docs`** you can see it from **Configuration Sections** On Demo and Documentation page.
 
 ----
 
 # Demo and Documentation
 
-You can access the live demo which is also a detailed documentation of octapush.docs usage [from here](http://documentation.octapush.xyz/octapush.doc)
+You can access the live demo which is also a detailed documentation of octapush.docs usage [from here](http://documentation.octapush.xyz/octapush.doc).
 
 ----
 
@@ -78,4 +79,4 @@ We will fix all of the issues and/or bugs as soon as possible.
 
 You can [fork](https://github.com/octapush/octapush.docs) or [download](https://github.com/octapush/octapush.docs/releases) **`octapush.docs`** with certain [license](license).
 
-Because I built **`octapush.docs`** alone, the **`octapush.docs`** development process becomes very slow and limited. If you are willing, you can help me with the various ways you can (ideas, concepts, techniques, development assistance, criticism, etc.). Do not hesitate, contact me through [the following link](http://fadhly.hol.es).
+Because I built **`octapush.docs`** alone, the **`octapush.docs`** development process becomes very slow and limited. If you are willing, you can help me in the various ways you can (ideas, concepts, techniques, development assistance, criticism, etc.). Do not hesitate, contact me through [the following link](http://fadhly.hol.es).

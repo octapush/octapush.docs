@@ -35,7 +35,7 @@
         },
         specialMime: {
             markdown: ['markdown', 'mdown', 'mkdn', 'md', 'mkd', 'mdwn', 'mdtxt', 'mdtext', 'text'],
-            images: ['jpg', 'jpeg', 'gif', 'png', 'bmp'],
+            image: ['jpg', 'jpeg', 'gif', 'png', 'bmp'],
             markup: ['htm', 'html', 'xhtml']
         },
         githubDataBuffer: null
@@ -123,10 +123,10 @@
                 setHighlight: function(target) {
                     $('.sidebar ul.nav li').removeClass('active');
 
-                    var tLi = target.parent();
+                    let tLi = target.parent();
                     tLi.addClass('active');
 
-                    var tParent = tLi.parents('li');
+                    let tParent = tLi.parents('li');
                     while (tParent.length > 0) {
                         tParent.addClass('active hide-before-after');
                         tParent = tParent.parents('li');
@@ -154,12 +154,6 @@
                         if (!s.useDummyData)
                             octaDoc.helper.github.getFilesAndDirFromDocDir(function(data) {
                                 dataProcessor(data);
-                                // s.githubDataBuffer = data;
-
-                                // data = octaDoc.helper.dataParser.sideMenu.menuDataBuilder(data.tree);
-                                // data = octaDoc.ui.sideMenu.build.constructDom(data);
-
-                                // if (cb) cb(data);
                             });
 
                         else {
@@ -167,14 +161,7 @@
                                 url: _o_.string.concat('dummy-menu.json?random=', Math.floor(Math.random() * 10000)),
                                 success: function(xhr) {
                                     if (!xhr.responseText) return;
-
                                     xhr = JSON.parse(xhr.responseText);
-                                    // s.githubDataBuffer = xhr;
-
-                                    // xhr = octaDoc.helper.dataParser.sideMenu.menuDataBuilder(xhr.tree);
-                                    // xhr = octaDoc.ui.sideMenu.build.constructDom(xhr);
-
-                                    // if (cb) cb(xhr);
                                     dataProcessor(xhr);
                                 }
                             });
@@ -288,7 +275,7 @@
                     $('a#document-title').text(data);
                 },
                 content: function(data) {
-                    if (s.specialMime.images.indexOf(data.extension) !== -1) {
+                    if (s.specialMime.image.indexOf(data.extension) !== -1) {
                         $('div#document-wrapper').html(
                             _o_.string.format('<img class="center-block" src="data:image/{1};base64,{2}" />', data.extension, data.content)
                         );

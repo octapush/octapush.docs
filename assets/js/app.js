@@ -837,7 +837,6 @@
                         return result;
                     },
                     getUrlByPath: function(path) {
-                        //console.log(path);
                         path = decodeURI(path);
 
                         var ghData = s.githubDataBuffer.tree.filter(function(i) {

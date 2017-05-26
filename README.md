@@ -50,7 +50,7 @@ To get details information about how to configuring **`octapush.docs`** you can 
 
 # Demo and Documentation
 
-You can access the live demo which is also a detailed documentation of octapush.docs usage [from here](http://documentation.octapush.xyz/octapush.docs).
+You can access the live demo which is also a detailed documentation of octapush.docs usage [from here](http://octapush.xyz/documentation/octapush.docs/).
 
 ----
 
